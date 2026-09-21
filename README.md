@@ -20,31 +20,27 @@ npm install
 
 ## 2. GitHub Setup
 
-### A. Set your Git identity (if not already set)
+### A. Set your Git identity (already configured)
 ```bash
-git config --global user.name "Your Name"
-git config --global user.email "your_email@example.com"
+git config --global user.name "mraxxi"
+git config --global user.email "49807069+mraxxi@users.noreply.github.com"
 ```
 
-### B. Generate an SSH key for GitHub
-```bash
-ssh-keygen -t ed25519 -C "your_email@example.com"
-```
-Print your public key and add it to [GitHub SSH Keys](https://github.com/settings/keys):
+### B. Add your SSH Key to GitHub
+1. Copy your public key:
 ```bash
 cat ~/.ssh/id_ed25519.pub
 ```
-Test the connection:
+2. Add it at: **https://github.com/settings/ssh/new**
+3. Test connection:
 ```bash
 ssh -T git@github.com
 ```
 
 ### C. Link to your GitHub Repository
-Create a new empty repository on GitHub, then link and push:
+Create a repository named `classque-dev` (or another name) on GitHub, then link and push:
 ```bash
-git add .
-git commit -m "feat: initial Cloudflare Worker + D1 template"
-git remote add origin git@github.com:<your-username>/<your-repo-name>.git
+git remote add origin git@github.com:mraxxi/classque-dev.git
 git push -u origin main
 ```
 
