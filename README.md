@@ -91,14 +91,12 @@ npx wrangler d1 execute classque-db --local --command="SELECT * FROM users;"
 
 ---
 
-## 5. Deployment
+## 5. Environment & Cloudflare Setup
 
-### A. Apply migrations to the production D1 database
-```bash
-npm run db:migrate:remote
-```
+To set up Cloudflare Access JWT validation in production, the following secrets must be set on the worker (via `wrangler secret put`):
+- `ACCESS_TEAM_DOMAIN`: e.g. `your-team.cloudflareaccess.com`
+- `ACCESS_AUD`: The audience tag of the Cloudflare Access application
 
-### B. Deploy Worker to Cloudflare
-```bash
-npm run deploy
-```
+Local development relies on `.dev.vars` (see `.dev.vars.example`) to bypass Access using `DEV_USER_EMAIL`.
+
+> **Note:** As per H10 (Terminal Safety), we do not run remote migrations (`--remote`) or deploy to production from local environments. This repository strictly uses `db:migrate:local` and `db:reset:local` for safety.

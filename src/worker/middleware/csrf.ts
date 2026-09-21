@@ -12,7 +12,10 @@ export async function csrfMiddleware(c: Context, next: Next) {
     const host = c.req.header('host');
     
     // If running in development and testing directly, origin might be missing or match localhost
-    if (c.env.ENVIRONMENT === 'production' && origin && host) {
+    if (c.env.ENVIRONMENT === 'production') {
+      if (!origin || !host) {
+        return c.json({ error: { code: 'forbidden', messageKey: 'errors.forbidden' } }, 403);
+      }
       try {
         const originUrl = new URL(origin);
         if (originUrl.host !== host) {

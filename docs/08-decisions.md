@@ -50,3 +50,4 @@ Agents: read this before starting any task. Append new open questions at the bot
 | ID | Question | Proposed default |
 |---|---|---|
 | Q-010 | IDN-002 (Cloudflare Access JWT validation) relies on D-008 (Proposed). Does this block Phase 0? | Implement JWT validation as specified, rely on `DEV_USER_EMAIL` bypass for local testing until a real setup exists. |
+| Q-011 | Issuer validation in `verifyAccessJwt` is currently incomplete per owner direction (Phase 0). | Leave incomplete until D-008 Cloudflare Access setup. |
