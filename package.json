@@ -1,0 +1,17 @@
+{
+  "name": "classque-dev",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "types": "wrangler types",
+    "db:migrate:local": "wrangler d1 execute classque-db --local --file=./migrations/0001_initial_schema.sql",
+    "db:migrate:remote": "wrangler d1 execute classque-db --remote --file=./migrations/0001_initial_schema.sql"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260920.1",
+    "typescript": "^5.6.3",
+    "wrangler": "^4.135.0"
+  }
+}
