@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "typecheck": "tsc -b",
-    "test": "vitest",
+    "test": "vitest run --fileParallelism=false",
     "check:i18n": "tsx scripts/check-i18n.ts",
     "db:migrate:local": "wrangler d1 migrations apply classque-db --local",
     "db:reset:local": "rm -rf .wrangler/state/v3/d1 && npm run db:migrate:local"

@@ -1,12 +1,25 @@
+const DEFAULT_STATUS_CODES: Record<string, number> = {
+  validation_failed: 400,
+  bad_request: 400,
+  unauthorized: 401,
+  forbidden: 403,
+  not_found: 404,
+  conflict: 409,
+  internal_error: 500
+};
+
 export class AppError extends Error {
+  public readonly statusCode: number;
+
   constructor(
     public readonly code: string,
     public readonly messageKey: string,
-    public readonly statusCode: number = 400,
+    statusCode?: number,
     public readonly details?: unknown
   ) {
     super(code);
     this.name = 'AppError';
+    this.statusCode = statusCode ?? DEFAULT_STATUS_CODES[code] ?? 400;
   }
 
   toJSON() {

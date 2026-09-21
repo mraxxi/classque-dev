@@ -8,6 +8,7 @@ import { learnersRouter } from './routes/learners';
 import { sessionsRouter } from './routes/sessions';
 import { scheduleRouter, scheduleRulesRouter } from './routes/schedule';
 import { AppError } from '../shared/errors';
+import { ZodError } from 'zod';
 
 const app = new Hono<{ Bindings: { DB: any, ENVIRONMENT: string, DEV_USER_EMAIL?: string, ACCESS_TEAM_DOMAIN?: string, ACCESS_AUD?: string } }>();
 
@@ -16,6 +17,9 @@ app.onError((err, c) => {
   console.error(err);
   if (err instanceof AppError) {
     return c.json(err.toJSON(), err.statusCode as any);
+  }
+  if (err instanceof ZodError) {
+    return c.json({ error: { code: 'validation_failed', messageKey: 'errors.validation_failed', details: err.flatten() } }, 400);
   }
   return c.json({ error: { code: 'internal_error', messageKey: 'errors.error' } }, 500);
 });

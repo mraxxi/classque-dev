@@ -82,7 +82,7 @@ npm run db:migrate:local
 ```bash
 npm run dev
 ```
-Open [http://localhost:8787](http://localhost:8787) or [http://localhost:8787/api/users](http://localhost:8787/api/users) to verify D1 reads.
+Open [http://localhost:5173](http://localhost:5173) or [http://localhost:5173/api/v1/health](http://localhost:5173/api/v1/health) to verify app and API connectivity.
 
 ### C. Execute raw SQL query locally
 ```bash

@@ -14,6 +14,7 @@ sessionsRouter.get('/', async (c) => {
   const from = c.req.query('from') as string;
   const to = c.req.query('to') as string;
   const workplaceId = c.req.query('workplaceId');
+  const groupId = c.req.query('groupId');
 
   if (!from || !to) throw new AppError('validation_failed', 'errors.missing_date_range');
   
@@ -26,14 +27,15 @@ sessionsRouter.get('/', async (c) => {
   }
 
   const repo = new SessionsRepo(c.env.DB);
-  const sessions = await repo.listSessionsInRange(identity.accountId, from, to, workplaceId);
+  const sessions = await repo.listSessionsInRange(identity.accountId, from, to, workplaceId, groupId);
   return c.json(sessions);
 });
 
 sessionsRouter.post('/', async (c) => {
   const identity = c.get('identity');
   const repo = new SessionsRepo(c.env.DB);
-  const tz = 'UTC'; // See groups.ts comment on tz
+  // SCH-008: Each Session keeps the tz it was created with (threaded from user identity)
+  const tz = identity.timezone || 'UTC';
 
   const data = CreateSessionSchema.parse(await c.req.json());
   const session = await repo.createOneOffSession(identity.accountId, tz, data);

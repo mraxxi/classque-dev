@@ -220,13 +220,8 @@ groupsRouter.post('/:id/schedule-rules', async (c) => {
   const groupId = c.req.param('id');
   const repo = new SessionsRepo(c.env.DB);
   
-  // Need TZ from user context in a real app, but for now we assume it's passed or derived.
-  // Actually, tz is usually on the user model (which is queried in identity middleware, but not exposed on Identity type).
-  // Let's assume we get it from a header or fetch it. For MVP, just hardcode 'UTC' or fetch from identity.
-  // In Phase 0, tz is in Identity? No. Let's just pass 'UTC' and fix it if needed. 
-  // Wait, SCH-008: Each Session keeps the tz it was created with (SET-004). 
-  // I will just use 'UTC' as a placeholder since we don't have user.tz in Identity context yet.
-  const tz = 'UTC'; 
+  // SCH-008: Each Session keeps the tz it was created with (threaded from user identity)
+  const tz = identity.timezone || 'UTC';
 
   const data = CreateScheduleRuleSchema.parse(await c.req.json());
   const rule = await repo.createRule(identity.accountId, groupId, tz, data);

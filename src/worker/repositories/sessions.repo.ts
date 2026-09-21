@@ -104,9 +104,10 @@ export class SessionsRepo {
     ).bind(accountId, sessionId).first();
   }
 
-  async listSessionsInRange(accountId: string, fromDate: string, toDate: string, workplaceId?: string) {
+  async listSessionsInRange(accountId: string, fromDate: string, toDate: string, workplaceId?: string, groupId?: string) {
     // Limits the date range logic up to the service layer (max 14 days)
-    // We join groups to allow optional filtering by workplaceId
+    // We join groups to allow optional filtering by workplaceId or groupId
+    // Relies on index: idx_sessions_range (account_id, session_date)
     let query = `
       SELECT s.*, g.name as group_name, g.color as group_color, g.workplace_id,
              (SELECT count(*) FROM attendance a WHERE a.session_id = s.id AND a.status = 'present') as present_count,
@@ -121,11 +122,16 @@ export class SessionsRepo {
       query += ' AND g.workplace_id = ?';
       params.push(workplaceId);
     }
+    if (groupId) {
+      query += ' AND s.group_id = ?';
+      params.push(groupId);
+    }
 
     query += ' ORDER BY s.session_date ASC, s.start_time ASC';
 
-    const { results } = await this.db.prepare(query).bind(...params).all();
-    return results;
+    const res = await this.db.prepare(query).bind(...params).all();
+    console.log(`[Budget] GET /sessions (Today view) - rows_read: ${res.meta?.rows_read ?? 0}, rows_written: ${res.meta?.rows_written ?? 0}`);
+    return res.results;
   }
 
   // For batch inserts during top-up

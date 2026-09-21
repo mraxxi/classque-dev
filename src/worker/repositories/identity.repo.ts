@@ -57,7 +57,8 @@ export class IdentityRepository {
       userId,
       accountId,
       role: 'teacher',
-      email
+      email,
+      timezone
     };
   }
   

@@ -28,7 +28,10 @@ export class AttendanceRepo {
     });
 
     const results = await this.db.batch(stmts);
-    return results.reduce((sum: number, r: any) => sum + (r.meta.changes || 0), 0);
+    const rowsWritten = results.reduce((sum: number, r: any) => sum + (r.meta?.rows_written ?? r.meta?.changes ?? 0), 0);
+    const rowsRead = results.reduce((sum: number, r: any) => sum + (r.meta?.rows_read ?? 0), 0);
+    console.log(`[Budget] Attendance Save - rows_read: ${rowsRead}, rows_written: ${rowsWritten}`);
+    return rowsWritten;
   }
 
   async getSummary(accountId: string, groupId: string, fromDate: string, toDate: string) {

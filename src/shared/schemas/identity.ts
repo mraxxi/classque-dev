@@ -14,7 +14,9 @@ export const IdentitySchema = z.object({
   userId: z.string(),
   accountId: z.string(),
   email: z.string().email(),
-  role: z.enum(['teacher'])
+  role: z.enum(['teacher']),
+  timezone: z.string().default('UTC')
 });
 
 export type Identity = z.infer<typeof IdentitySchema>;
+

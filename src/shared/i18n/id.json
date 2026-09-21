@@ -60,12 +60,62 @@
     "export": "Ekspor",
     "loading": "Memuat...",
     "error": "Terjadi kesalahan",
-    "retry": "Coba lagi"
+    "retry": "Coba lagi",
+    "minutes": "menit",
+    "days": "Hari"
   },
   "errors": {
     "not_found": "Sumber tidak ditemukan",
     "forbidden": "Akses ditolak",
     "validation_failed": "Validasi gagal"
+  },
+  "today": {
+    "empty": {
+      "title": "Tidak ada sesi hari ini",
+      "description": "Anda tidak memiliki sesi yang dijadwalkan untuk hari ini."
+    }
+  },
+  "groups": {
+    "add": "Tambah Kelompok",
+    "empty": {
+      "title": "Belum ada kelompok",
+      "description": "Buat kelompok pertama Anda untuk mulai menjadwalkan sesi."
+    },
+    "kind": {
+      "class": "Kelas",
+      "individual": "Individu"
+    },
+    "tabs": {
+      "learners": "Peserta",
+      "schedule": "Jadwal",
+      "upcoming_sessions": "Sesi Mendatang"
+    },
+    "empty_learners": "Belum ada peserta di kelompok ini.",
+    "empty_rules": "Belum ada aturan jadwal.",
+    "empty_sessions": "Belum ada sesi mendatang."
+  },
+  "attendance": {
+    "session_status": {
+      "scheduled": "Terjadwal",
+      "held": "Terlaksana",
+      "cancelled": "Dibatalkan",
+      "rescheduled": "Dijadwal ulang"
+    },
+    "status": {
+      "present": "Hadir",
+      "absent": "Absen",
+      "late": "Terlambat",
+      "excused": "Izin"
+    }
+  },
+  "sessions": {
+    "status": {
+      "scheduled": "Terjadwal",
+      "held": "Terlaksana",
+      "cancelled": "Dibatalkan",
+      "rescheduled": "Dijadwal ulang"
+    },
+    "overlap": "Tumpang tindih dengan {{group}}"
   },
   "nav": {
     "today": "Hari ini",

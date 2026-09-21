@@ -47,7 +47,8 @@ export class IdentityService {
         userId: newIdentity.userId,
         accountId: newIdentity.accountId,
         email: newIdentity.email,
-        role: newIdentity.role as 'teacher'
+        role: newIdentity.role as 'teacher',
+        timezone: newIdentity.timezone
       };
     }
 
@@ -55,7 +56,8 @@ export class IdentityService {
       userId: userRow.userId as string,
       accountId: userRow.accountId as string,
       email: userRow.email as string,
-      role: userRow.role as 'teacher'
+      role: userRow.role as 'teacher',
+      timezone: (userRow.timezone as string) || 'UTC'
     };
   }
 

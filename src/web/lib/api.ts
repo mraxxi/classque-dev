@@ -68,7 +68,7 @@ export const api = {
     getAttendanceSummary: (id: string, from: string, to: string) => fetchApi(`/learners/${id}/attendance-summary?from=${from}&to=${to}`)
   },
   sessions: {
-    list: (from: string, to: string, workplaceId?: string) => fetchApi(`/sessions?from=${from}&to=${to}${workplaceId ? `&workplaceId=${workplaceId}` : ''}`),
+    list: (from: string, to: string, workplaceId?: string, groupId?: string) => fetchApi(`/sessions?from=${from}&to=${to}${workplaceId ? `&workplaceId=${workplaceId}` : ''}${groupId ? `&groupId=${groupId}` : ''}`),
     create: (data: any) => fetchApi('/sessions', { method: 'POST', body: JSON.stringify(data) }),
     get: (id: string) => fetchApi(`/sessions/${id}`),
     update: (id: string, data: any) => fetchApi(`/sessions/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
