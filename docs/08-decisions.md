@@ -47,3 +47,6 @@ Agents: read this before starting any task. Append new open questions at the bot
 | Q-009 | Data retention and deletion policy for learner data (minors), before opening beyond testers | Archive only; no permanent deletion UI |
 
 ## Agent-raised questions (append below; include your proposed default)
+| ID | Question | Proposed default |
+|---|---|---|
+| Q-010 | IDN-002 (Cloudflare Access JWT validation) relies on D-008 (Proposed). Does this block Phase 0? | Implement JWT validation as specified, rely on `DEV_USER_EMAIL` bypass for local testing until a real setup exists. |
