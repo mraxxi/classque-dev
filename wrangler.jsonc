@@ -1,16 +1,19 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "classque-dev",
-  "main": "src/index.ts",
-  "compatibility_date": "2024-09-23",
-  "compatibility_flags": [
-    "nodejs_compat"
-  ],
+  "name": "classque",
+  "main": "src/worker/index.ts",
+  "compatibility_date": "2024-09-19",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"]
+  },
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "classque-db",
-      "database_id": "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+      "database_id": "PLACEHOLDER-FOR-DB-ID" // Supplied by the owner
     }
   ]
 }

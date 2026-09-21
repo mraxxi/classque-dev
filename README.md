@@ -21,6 +21,7 @@ npm install
 ## 2. GitHub Setup
 
 ### A. Set your Git identity (already configured)
+(github cli is also installed)
 ```bash
 git config --global user.name "mraxxi"
 git config --global user.email "49807069+mraxxi@users.noreply.github.com"
