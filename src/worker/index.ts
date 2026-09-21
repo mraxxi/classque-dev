@@ -2,6 +2,11 @@ import { Hono } from 'hono';
 import { identityMiddleware } from './middleware/identity';
 import { csrfMiddleware } from './middleware/csrf';
 import { meRouter } from './routes/me';
+import { workplacesRouter, termsRouter } from './routes/workplaces';
+import { groupsRouter } from './routes/groups';
+import { learnersRouter } from './routes/learners';
+import { sessionsRouter } from './routes/sessions';
+import { scheduleRouter, scheduleRulesRouter } from './routes/schedule';
 import { AppError } from '../shared/errors';
 
 const app = new Hono<{ Bindings: { DB: any, ENVIRONMENT: string, DEV_USER_EMAIL?: string, ACCESS_TEAM_DOMAIN?: string, ACCESS_AUD?: string } }>();
@@ -27,5 +32,11 @@ api.use('*', csrfMiddleware);
 api.use('*', identityMiddleware);
 
 api.route('/me', meRouter);
-
+api.route('/workplaces', workplacesRouter);
+api.route('/terms', termsRouter);
+api.route('/groups', groupsRouter);
+api.route('/learners', learnersRouter);
+api.route('/sessions', sessionsRouter);
+api.route('/schedule', scheduleRouter);
+api.route('/schedule-rules', scheduleRulesRouter);
 export default app;

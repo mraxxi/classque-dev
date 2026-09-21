@@ -1,6 +1,11 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Shell } from './components/Shell';
-import { TodayScreen, WeekScreen, GroupsScreen, PlansScreen } from './features/home/PlaceholderScreens';
+import { TodayScreen } from './features/today/TodayScreen';
+import { WeekScreen } from './features/week/WeekScreen';
+import { GroupsScreen } from './features/groups/GroupsScreen';
+import { GroupDetailScreen } from './features/groups/GroupDetailScreen';
+import { LearnerProfileScreen } from './features/learners/LearnerProfileScreen';
+import { PlansScreen } from './features/home/PlaceholderScreens'; // Keep plans placeholder for now
 import { SettingsScreen } from './features/settings/SettingsScreen';
 import { MoreScreen } from './features/more/MoreScreen';
 
@@ -20,6 +25,14 @@ const router = createBrowserRouter([
       {
         path: "groups",
         element: <GroupsScreen />
+      },
+      {
+        path: "groups/:id",
+        element: <GroupDetailScreen />
+      },
+      {
+        path: "learners/:id",
+        element: <LearnerProfileScreen />
       },
       {
         path: "plans",

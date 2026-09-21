@@ -1,9 +1,9 @@
-import { unstable_dev, UnstableDevWorker } from 'wrangler';
+import { unstable_dev, Unstable_DevWorker } from 'wrangler';
 import { describe, beforeAll, afterAll, it, expect } from 'vitest';
 
 describe('/api/v1/me integration', () => {
-  let prodWorker: UnstableDevWorker;
-  let devWorker: UnstableDevWorker;
+  let prodWorker: Unstable_DevWorker;
+  let devWorker: Unstable_DevWorker;
 
   beforeAll(async () => {
     prodWorker = await unstable_dev('src/worker/index.ts', {
