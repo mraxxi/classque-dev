@@ -1,17 +1,17 @@
 ---
 trigger: always_on
-description: Core specification protocol, hard constraints, and read order for ClassQue
+description: Implementation protocol, planning rules and hard constraints
 ---
 
-# Rule: ClassQue Specification Protocol & Hard Constraints
+# Rule: Spec-driven implementation protocol
 
-Applies to all tasks in this repository.
+Applies to all code and configuration changes.
 
-## 1. Mandatory Start-of-Task Read Order
-Before writing any code or modifying any schema in any session:
-1. Re-read `AGENTS.md` and rules in `.agents/rules/`.
-2. Inspect `docs/00-overview.md` and `docs/01-glossary.md`.
-3. Check accepted decisions and open questions in `docs/08-decisions.md`.
+## 1. Context Loading Order
+Before starting any phase or module:
+1. Re-read `AGENTS.md` and all `.agents/rules/`.
+2. Review `docs/00-overview.md` and `docs/01-glossary.md`.
+3. Check `docs/08-decisions.md` (accepted decisions and open questions).
 4. Locate the active phase in `docs/07-roadmap.md`.
 5. Re-open the specific module files in `docs/05-modules/` for the task (along with `docs/02-domain-model.md`, `docs/03-subject-packs.md`, `docs/04-grading.md`, `docs/06-architecture.md` as referenced).
 Do not implement from memory; always re-open spec files.
@@ -24,7 +24,7 @@ Do not implement from memory; always re-open spec files.
 - **H5 Glossary:** Use terms in `docs/01-glossary.md` strictly. Avoid banned terms.
 - **H6 Tenant safety:** Every tenant table has `account_id`. Filter queries by server-verified identity via `requireAccess()`.
 - **H7 Dates:** Instants = UTC ISO-8601; Dates = `YYYY-MM-DD`; Session times = wall-clock `HH:mm` + IANA timezone.
-- **H8 Mobile first:** 360 px width first; 44 px min tap targets; bottom navigation.
+- **H8 Responsive design, laptop primary:** Primary target is laptop landscape viewports; secondary support for tablets and phones; viewport-conditional navigation (sidebar/top nav on laptop, bottom nav on phone); 44 px min touch targets; battery- and resource-conscious execution.
 - **H9 Privacy:** Learner data is personal data of minors. No analytics, tracking, or external fonts. Never log learner names or scores.
 - **H10 Local only:** Never commit secrets. Never deploy (`wrangler deploy`) or touch remote databases (`--remote`).
 - **H11 Approved dependencies:** Only those listed in `docs/06-architecture.md`.

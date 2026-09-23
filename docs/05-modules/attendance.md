@@ -4,10 +4,10 @@ trigger: always_on
 
 # Attendance (ATT) — Phase 0.1
 
-Fast, forgiving, phone-first. Recording a 30-learner roster should take under 30 seconds.
+Fast, forgiving, battery/resource-conscious. Recording a 30-learner roster should take under 30 seconds across laptops, tablets, or phones.
 
 ## Requirements
-- **ATT-001** Attendance screen for a Session: roster (per DM-013) with large rows. Each row has four status buttons (Present, Absent, Late, Excused) that use both icon and text, not color alone. The selected status is clearly highlighted. A sticky header shows "{marked} of {total} marked". A sticky bottom **Save** button.
+- **ATT-001** Attendance screen for a Session: roster (per DM-013) with clear rows. Each row has four status buttons (Present, Absent, Late, Excused) that use both icon and text, not color alone. The selected status is clearly highlighted. A sticky header shows "{marked} of {total} marked". A sticky bottom **Save** button on compact viewports or integrated action bar on laptop viewports.
 - **ATT-002** "Mark all present": sets every **unmarked** row to Present; explicit marks are never overwritten.
 - **ATT-003** Optional per-row note (max 200 chars) behind an icon, collapsed by default.
 - **ATT-004** Save through `PUT /api/v1/sessions/:id/attendance` with `{ records: [{ learnerId, status, note? }] }`. Idempotent upsert of the provided rows in one `db.batch`; sets the Session to `held` when it was `scheduled` (DM-024) and returns the updated Session.
@@ -27,7 +27,7 @@ Fast, forgiving, phone-first. Recording a 30-learner roster should take under 30
 | GET | `/api/v1/learners/:id/attendance-summary?from=&to=` |
 
 ## Acceptance criteria
-- Given 30 Learners, When "Mark all present" is tapped and 2 rows are changed to Absent and Late, Then Save writes 30 rows in one batch and the Session becomes `held`.
+- Given 30 Learners, When "Mark all present" is clicked/tapped and 2 rows are changed to Absent and Late, Then Save writes 30 rows in one batch and the Session becomes `held`.
 - Given a save fails due to a dropped connection, Then the draft remains, "Not saved yet" is shown, and a retry saves successfully with no duplicates.
 - Given a Learner who left the Group before the Session date, Then they are not on the roster (DM-013).
 - Given 3 present, 1 late, 1 absent, 2 excused, Then the rate is 4/5 = 80%.

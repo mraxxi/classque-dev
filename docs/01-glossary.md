@@ -32,6 +32,14 @@ One concept, one word, everywhere (code, keys, UI). The Indonesian column is a *
 | `module` | Module | Modul | Toggleable feature area. | plugin |
 | `report` | Report | Laporan | Printable learner report (post-MVP). | |
 
+## Device tiers and layout
+| Identifier | English label | Indonesian (draft) | Definition | Avoid |
+|---|---|---|---|---|
+| `laptop` | Laptop | Laptop | Primary design target; landscape viewports (≥ 1024 px width) using sidebar or top navigation. | desktop-only |
+| `tablet` | Tablet | Tablet | Secondary target tier; portrait/landscape viewports (768–1023 px width). | |
+| `phone` | Phone | Ponsel | Secondary target tier; compact viewports (< 768 px width) using bottom navigation. | mobile-first (implies phone is primary) |
+| `responsive` | Responsive | Responsif | Layout adapting gracefully across laptop, tablet, and phone without horizontal scroll. | mobile-only |
+
 ## Statuses and values
 - Session status: `scheduled` Scheduled/Terjadwal, `held` Held/Terlaksana, `cancelled` Cancelled/Dibatalkan, `rescheduled` Rescheduled/Dijadwal ulang.
 - Attendance status: `present` Present/Hadir, `absent` Absent/Tidak hadir, `late` Late/Terlambat, `excused` Excused/Izin.
@@ -39,7 +47,7 @@ One concept, one word, everywhere (code, keys, UI). The Indonesian column is a *
 - Workplace kind: `institution` Institution/Institusi, `independent` Independent/Mandiri.
 
 ## Screens and actions
-Today (Hari ini), Week (Minggu), Groups, Plans, More, Settings (Pengaturan). Verbs: Add (Tambah), Edit (Ubah), Save (Simpan), Cancel (Batal), Delete (Hapus), Archive (Arsipkan), Restore (Pulihkan), Duplicate (Duplikat), Export (Ekspor). Use these verbs consistently; never mix Create/New/Make.
+Today (Hari ini), Week (Minggu), Groups, Plans, Notes, Settings (Pengaturan), More (on phone navigation tier). Navigation adapts conditionally: sidebar or top navigation on laptop-class viewports; bottom navigation on phone viewports. Verbs: Add (Tambah), Edit (Ubah), Save (Simpan), Cancel (Batal), Delete (Hapus), Archive (Arsipkan), Restore (Pulihkan), Duplicate (Duplikat), Export (Ekspor). Use these verbs consistently; never mix Create/New/Make.
 
 ## Label layer (configurable words)
 Internally the entity is always `group`. The visible word comes from `useLabel('group')`:

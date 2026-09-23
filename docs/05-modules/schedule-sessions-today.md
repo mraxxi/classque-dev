@@ -20,14 +20,14 @@ The heart of the planner. Today is the home screen.
 - **TDY-001** Today shows the selected local date and all Sessions of that date across all Workplaces ordered by `start_time`. Each card: time range, Group name with color chip, Workplace badge (WPL-005), status, Plan indicator (attached / none), attendance summary ("12/14 present" or "Not recorded").
 - **TDY-002** The current or next Session is visually emphasized, using the device clock in the user's timezone.
 - **TDY-003** Overlapping Sessions (DM-025) show a warning icon plus text "Overlaps with {group}" (`sessions.overlap`); the warning is informational, never blocking.
-- **TDY-004** Quick actions on each card: **Attendance** (primary), **Plan**, **Note**. Two taps from Today reach any of them.
+- **TDY-004** Quick actions on each card: **Attendance** (primary), **Plan**, **Note**. Two clicks/taps from Today reach any of them.
 - **TDY-005** Empty states: no Sessions today → "No sessions today" with "Add session"; no Groups yet → guided first-run prompt to add a Group.
 - **TDY-006** Date navigation: previous/next day, tap the date to jump, "Today" button to reset.
 - **TDY-007** Performance: one request returns the range's Sessions plus attendance counts (single grouped query). Range is limited to 14 days per request.
 - **TDY-008** Workplace filter (WPL-004) applies to Today and Week.
 
 ## Week
-- **TDY-010** Week view: 7 days starting at the user's `week_start`, rendered as a vertical agenda on mobile (day headers with date, then compact Session cards). Overlap flags apply. Tapping a day header opens Today for that date. Previous/next week navigation.
+- **TDY-010** Week view: 7 days starting at the user's `week_start`. On laptop-class landscape viewports, renders as a multi-column schedule grid taking advantage of screen width; on compact phone/tablet viewports, adapts to a vertical agenda (day headers with date, then compact Session cards). Overlap flags apply. Clicking/tapping a day header opens Today for that date. Previous/next week navigation.
 - **TDY-011** Week view uses the same endpoint and card component as Today (compact variant).
 
 ## Endpoints

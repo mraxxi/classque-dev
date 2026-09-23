@@ -32,6 +32,7 @@ Agents: read this before starting any task. Append new open questions at the bot
 | D-019 | Plan-format export deferred; Plans stay structured | Default | Owner undecided |
 | D-020 | Archive instead of delete for Workplace/Group/Learner/Plan/Assessment | Default | Protects history and reports |
 | D-021 | Learner belongs to exactly one Workplace | Default | Avoids cross-workplace de-duplication (Q-008) |
+| D-022 | Responsive layout with laptop primary (laptop > tablet > phone); reframing performance as battery/resource-conscious | Accepted | Corrects misleading "mobile-first" framing based on tester device usage data. Reverses H8 single-breakpoint phone assumption: laptop landscape viewports (≥ 1024 px) are the primary design target; tablet and phone viewports are fully supported secondary tiers; navigation is viewport-conditional (sidebar/top nav on laptop, bottom nav on phone). Client performance is framed around conserving battery/memory on portable devices during long teaching days. Documents known platform limitations for iOS Safari PWA (no `beforeinstallprompt`, 7-day tab ITP storage cap, no background sync, standalone-only push) and desktop browsers. |
 
 ## Open questions (owner)
 | ID | Question | Default until answered |

@@ -55,10 +55,33 @@ src/
 | Worker bundle | 3 MB | Keep the API lean; do not import large libraries into the Worker |
 Exceeding the daily D1 limits makes queries fail until 00:00 UTC, so unbounded queries are treated as bugs (H2). Indexes cost extra rows written: add only those in `02-domain-model.md` unless a query needs one.
 
-## PWA
+### Battery & Resource Consciousness (Client-Side Budget)
+The app targets portable, battery-powered devices (laptop > tablet > phone). Client-side performance is framed around conserving battery and memory during long school days, not merely saving bandwidth on phones:
+- Zero polling or auto-refresh loops.
+- Minimal DOM nodes and clean component unmounting.
+- Avoid continuous CSS animations, transitions on large layouts, or heavy canvas/WebGL renders.
+- Heavy formatting (CSV generation, print preview rendering) occurs strictly on client-demand.
+
+## PWA & Installability
 - `display: standalone`, `start_url: "/"`, name "ClassQue", theme and background colors from design tokens.
 - Service worker precaches the app shell only. **Never cache `/api/*`.** Use `navigateFallbackDenylist` for `/api/` and `/cdn-cgi/` so Cloudflare Access login redirects are not swallowed. Register with `registerType: 'prompt'` so updates never reload mid-entry.
 - Verify the install and update flow behind Cloudflare Access before Phase 0 is marked done.
+
+### Cross-Device & Cross-Browser Installability (Known Platform Limitations)
+Installability is a priority across the device tiers (laptops, tablets, phones), but platform capabilities vary significantly across operating systems and browsers. Rather than assuming full feature parity, the following known constraints are explicitly documented:
+
+1. **Apple iOS / iPadOS Safari (WebKit):**
+   - **No Programmatic Install Prompt:** WebKit does not support the standard `beforeinstallprompt` event or programmatic install banners. Installation requires manual user action via the Safari Share Sheet → "Add to Home Screen".
+   - **Storage Eviction (ITP 7-Day Cap):** In Safari browser tabs, WebKit's Intelligent Tracking Prevention (ITP) may delete client storage (`localStorage`, `IndexedDB`) after 7 days without user interaction. Standalone Home Screen PWAs run in an isolated WebKit container and are exempt from the 7-day cap, though still subject to device-wide low-disk storage eviction.
+   - **No Background Sync:** WebKit does not support the Background Sync API or Periodic Background Sync API. All synchronization and draft persistence occur during active foreground sessions.
+   - **Web Push Restrictions:** Web Push requires iOS/iPadOS 16.4+ and functions *only* when the PWA has been added to the Home Screen (unsupported in browser tabs). Push notifications are out of scope for MVP (H3), but this is a structural platform limitation.
+   - **Navigation Gesture Collisions:** In standalone mode, iOS edge-swipe gestures (swipe from left/right screen edge to navigate page history) cannot be disabled and may collide with wide modal drag handlers or horizontal carousels unless touch-action is strictly isolated.
+   - **Manifest Property Ignorance:** WebKit ignores `orientation` declarations in the manifest. Status bar styling must be controlled via the `<meta name="apple-mobile-web-app-status-bar-style">` tag.
+
+2. **Desktop Browsers (Chromium / Safari macOS / Firefox):**
+   - **Chromium & Edge (Windows, macOS, Linux, ChromeOS):** Full PWA support with omnibox install prompts, desktop windowing, window controls overlay, and persistent storage.
+   - **macOS Safari (Sonoma 14+):** Supports "Add to Dock" via File → Add to Dock. Lacks programmatic install events. Runs in a dedicated web application container.
+   - **Desktop Firefox:** Does not natively support desktop PWA installation (no standalone window mode) without third-party browser extensions. Runs purely as an in-tab web application.
 
 ## Security and privacy
 - Same-origin API only: mutating requests require `Content-Type: application/json` and a matching `Origin` (CSRF defense).
@@ -69,7 +92,7 @@ Exceeding the daily D1 limits makes queries fail until 00:00 UTC, so unbounded q
 ## Testing strategy
 - Unit tests for every function in `shared/` (grading vectors from `04-grading.md`, attendance rate, recurrence and top-up idempotency, overlap detection, CSV escaping, pack validation, i18n parity).
 - Worker route tests with Hono's `app.request()` against a local D1 (via `@cloudflare/vitest-pool-workers` if compatible; otherwise propose an approach in the Phase 0 plan and log a decision). Cover tenant isolation (IDN-006), validation failures, and idempotent bulk writes.
-- UI verification is manual with the browser tool at 360×800 and 768×1024, in both languages (AGENTS.md section 5).
+- UI verification is manual with the browser tool across device tiers: primary laptop landscape (e.g. 1280×800 or 1024×768), tablet (e.g. 768×1024), and phone (e.g. 360×800), in both languages (AGENTS.md section 5). Verify that navigation adapts cleanly (sidebar/top navigation on laptop; bottom navigation on phone), layouts exploit landscape width on laptop without horizontal page scrolling, and interactions are touch- and mouse-friendly.
 
 ## Extension points already in the design (do not build the features)
 `account_id` on every row; `memberships.role`; `visibility` on plans and notes; Subject Packs as data; Workplaces; module toggles; session status and group kind for billing. Adding student/head-teacher access or collaboration later should mean new roles and endpoints, not schema rewrites.

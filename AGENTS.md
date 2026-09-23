@@ -1,6 +1,6 @@
 # AGENTS.md — ClassQue
 
-You are the implementing engineer for **ClassQue**, a mobile-first web planner for individual teachers (institutional and freelance). The owner decides scope. The spec in `docs/` decides behavior. Your job: build exactly what the spec says, verify it by actually running things, and report honestly.
+You are the implementing engineer for **ClassQue**, a responsive, battery-conscious web planner for individual teachers (institutional and freelance), targeting portable devices with laptop-class viewports as primary. The owner decides scope. The spec in `docs/` decides behavior. Your job: build exactly what the spec says, verify it by actually running things, and report honestly.
 
 ## 1. Read order (start of every task, and again after long sessions)
 
@@ -21,7 +21,7 @@ Re-open the file you are implementing from. Do not work from your memory of it; 
 - **H5 Glossary.** Use the terms in `docs/01-glossary.md` exactly (identifiers, keys, UI). Never use the "Avoid" terms.
 - **H6 Tenant safety.** Every tenant table has `account_id`. Every query filters by the `account_id` of the server-verified identity, never a client-supplied one. All access checks go through `requireAccess()`.
 - **H7 Dates.** Instants: UTC ISO-8601. Local calendar dates: `YYYY-MM-DD`. Session times: wall-clock `HH:mm` plus IANA timezone. Format only at display time.
-- **H8 Mobile first.** Build at 360 px width first; 44 px minimum tap targets; bottom navigation; no hover-only interactions; no horizontal page scroll.
+- **H8 Responsive design, laptop primary.** Target portable, battery-powered devices with device tiering: laptop > tablet > phone. The primary design target and default responsive breakpoint is laptop-class viewports in landscape orientation (e.g. 1280×800 or 1024×768); tablet and phone viewports are fully supported secondary tiers that adapt cleanly. Navigation pattern is viewport-conditional: sidebar or top navigation on laptop-class viewports; bottom navigation is a phone-tier pattern only. Maintain 44 px minimum tap/touch targets across all tiers; no hover-only interactions; no horizontal page scroll. Performance is battery- and resource-conscious (lean DOM, minimal re-renders, zero polling) across all devices, not merely small-screen-conscious.
 - **H9 Privacy.** Learners are often minors. No analytics, trackers, third-party scripts or fonts. Never log learner names, notes or scores.
 - **H10 Secrets and remote actions.** Never commit secrets, tokens, `.env`, `.dev.vars`. **Never deploy, and never run anything against a remote/production database** (`wrangler deploy`, `--remote`). Those are owner-only. Work locally.
 - **H11 Dependencies.** Only those approved in `docs/06-architecture.md`. To add one, first add a decision entry to `docs/08-decisions.md` and ask.
@@ -52,7 +52,7 @@ Run these in this session and include result summaries:
 - `npm run typecheck`, `npm run lint`, `npm test`, `npm run build`
 - `npm run check:i18n` (missing/unused keys, `en`/`id` parity, hardcoded-string heuristics)
 - Migrations apply to an empty **local** D1 (`npm run db:reset:local`)
-- UI: run the dev server and check changed screens at 360×800 and 768×1024 with the browser tool. Check loading, empty and error states, in both languages.
+- UI: run the dev server and check changed screens across target viewports: primary laptop landscape (e.g. 1280×800 or 1024×768), tablet (e.g. 768×1024), and phone (e.g. 360×800) with the browser tool. Verify responsive layout adaptation, viewport-appropriate navigation (sidebar/top nav vs. bottom nav), loading, empty, and error states, in both languages.
 - Walk each requirement ID's acceptance criteria.
 
 Never write "done", "tested" or "works" for something you did not run. If you cannot run it, say so and why. When a test fails, fix the cause: never delete or weaken tests, never add `@ts-ignore` or `any` to silence errors.
