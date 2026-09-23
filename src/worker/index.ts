@@ -7,6 +7,8 @@ import { groupsRouter } from './routes/groups';
 import { learnersRouter } from './routes/learners';
 import { sessionsRouter } from './routes/sessions';
 import { scheduleRouter, scheduleRulesRouter } from './routes/schedule';
+import { plansRouter } from './routes/plans';
+import { notesRouter } from './routes/notes';
 import { AppError } from '../shared/errors';
 import { ZodError } from 'zod';
 
@@ -43,4 +45,6 @@ api.route('/learners', learnersRouter);
 api.route('/sessions', sessionsRouter);
 api.route('/schedule', scheduleRouter);
 api.route('/schedule-rules', scheduleRulesRouter);
+api.route('/plans', plansRouter);
+api.route('/notes', notesRouter);
 export default app;

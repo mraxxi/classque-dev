@@ -5,11 +5,19 @@ import { WeekScreen } from './features/week/WeekScreen';
 import { GroupsScreen } from './features/groups/GroupsScreen';
 import { GroupDetailScreen } from './features/groups/GroupDetailScreen';
 import { LearnerProfileScreen } from './features/learners/LearnerProfileScreen';
-import { PlansScreen } from './features/home/PlaceholderScreens'; // Keep plans placeholder for now
+import { PlansScreen } from './features/plans/PlansScreen';
+import { PlanDetailScreen } from './features/plans/PlanDetailScreen';
+import { PlanPrintView } from './features/plans/PlanPrintView';
+import { NotesScreen } from './features/notes/NotesScreen';
+import { SessionDetailScreen } from './features/sessions/SessionDetailScreen';
 import { SettingsScreen } from './features/settings/SettingsScreen';
 import { MoreScreen } from './features/more/MoreScreen';
 
 const router = createBrowserRouter([
+  {
+    path: "/plans/:id/print",
+    element: <PlanPrintView />
+  },
   {
     path: "/",
     element: <Shell />,
@@ -37,6 +45,22 @@ const router = createBrowserRouter([
       {
         path: "plans",
         element: <PlansScreen />
+      },
+      {
+        path: "plans/new",
+        element: <PlanDetailScreen />
+      },
+      {
+        path: "plans/:id",
+        element: <PlanDetailScreen />
+      },
+      {
+        path: "notes",
+        element: <NotesScreen />
+      },
+      {
+        path: "sessions/:id",
+        element: <SessionDetailScreen />
       },
       {
         path: "more",

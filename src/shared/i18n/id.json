@@ -5,12 +5,12 @@
       "plan": {
         "objectives": "Tujuan",
         "activities": "Kegiatan",
-        "materials": "Bahan",
+        "materials": "Materi",
         "notes": "Catatan"
       },
       "assessment": {
         "quiz": "Kuis",
-        "test": "Tes",
+        "test": "Ujian",
         "assignment": "Tugas",
         "project": "Proyek"
       }
@@ -20,28 +20,28 @@
       "plan": {
         "objectives": "Tujuan",
         "warm_up": "Pemanasan",
-        "presentation": "Penyajian",
+        "presentation": "Presentasi",
         "practice": "Latihan",
         "production": "Produksi",
         "wrap_up": "Penutup",
         "vocabulary": "Kosakata",
         "grammar_focus": "Fokus tata bahasa",
-        "materials": "Bahan",
+        "materials": "Materi",
         "homework": "Pekerjaan rumah"
       },
       "assessment": {
         "quiz": "Kuis",
-        "test": "Tes",
+        "test": "Ujian",
         "homework": "Pekerjaan rumah",
         "speaking": "Tugas berbicara",
         "writing": "Tugas menulis",
-        "listening": "Tugas menyimak",
+        "listening": "Tugas mendengarkan",
         "reading": "Tugas membaca"
       },
       "skill": {
         "reading": "Membaca",
         "writing": "Menulis",
-        "listening": "Menyimak",
+        "listening": "Mendengarkan",
         "speaking": "Berbicara",
         "vocabulary": "Kosakata",
         "grammar": "Tata bahasa"
@@ -61,65 +61,144 @@
     "loading": "Memuat...",
     "error": "Terjadi kesalahan",
     "retry": "Coba lagi",
-    "minutes": "menit",
+    "minutes": "mnt",
     "days": "Hari"
   },
   "errors": {
-    "not_found": "Sumber tidak ditemukan",
+    "not_found": "Data tidak ditemukan",
     "forbidden": "Akses ditolak",
-    "validation_failed": "Validasi gagal"
+    "validation_failed": "Validasi gagal",
+    "note_target_required": "Catatan harus terhubung ke pertemuan, kelompok, atau murid",
+    "required": "Bagian ini wajib diisi"
+  },
+  "plans": {
+    "title": "Rencana",
+    "new": "Rencana baru",
+    "edit": "Ubah rencana",
+    "duplicate": {
+      "title_suffix": "{{title}} (salinan)"
+    },
+    "used_in_sessions": "Digunakan di {{count}} pertemuan",
+    "used_in_sessions_one": "Digunakan di 1 pertemuan",
+    "used_in_sessions_other": "Digunakan di {{count}} pertemuan",
+    "empty": {
+      "title": "Belum ada rencana",
+      "description": "Buat rencana untuk mengatur kegiatan pertemuan Anda."
+    },
+    "search_placeholder": "Cari rencana...",
+    "all_packs": "Semua mata pelajaran",
+    "show_archived": "Tampilkan arsip",
+    "archived_tag": "Diarsipkan",
+    "multi_session": {
+      "title": "Rencana terhubung ke beberapa pertemuan",
+      "description": "Rencana ini sedang digunakan di {{count}} pertemuan. Bagaimana Anda ingin menerapkan perubahan ini?",
+      "edit_all": "Ubah untuk semua",
+      "duplicate_edit": "Duplikat dan ubah"
+    },
+    "print": "Cetak rencana",
+    "attach": "Hubungkan rencana",
+    "detach": "Lepaskan rencana",
+    "reuse_earlier": "Gunakan kembali rencana dari pertemuan sebelumnya",
+    "choose_existing": "Pilih rencana yang ada",
+    "no_plan_attached": "Tidak ada rencana terhubung",
+    "unsaved_warning": "Anda memiliki perubahan yang belum disimpan. Yakin ingin keluar?",
+    "draft_notice": "Draf belum disimpan",
+    "load_draft": "Muat draf",
+    "discard_draft": "Buang",
+    "no_items": "Belum ada butir",
+    "no_pairs": "Belum ada pasangan",
+    "pair_number": "Pasangan #{{number}}",
+    "form": {
+      "title": "Judul",
+      "title_placeholder": "cth. Tinjauan Bab 3",
+      "pack": "Mata pelajaran",
+      "add_item": "Tambah butir",
+      "add_pair": "Tambah pasangan kosakata",
+      "term": "Istilah",
+      "definition": "Definisi",
+      "other_sections": "Bagian lainnya"
+    }
+  },
+  "notes": {
+    "title": "Catatan",
+    "add": "Tambah catatan",
+    "edit": "Ubah catatan",
+    "delete_confirm": "Apakah Anda yakin ingin menghapus catatan ini?",
+    "empty": "Belum ada catatan",
+    "placeholder": "Ketik catatan Anda di sini...",
+    "target": {
+      "session": "Pertemuan",
+      "group": "Kelompok",
+      "learner": "Murid",
+      "all_learners": "Seluruh kelompok / pertemuan"
+    },
+    "recent_notes": "Catatan Terbaru",
+    "draft_notice": "Draf",
+    "clear_draft": "Hapus draf"
   },
   "today": {
     "empty": {
-      "title": "Tidak ada sesi hari ini",
-      "description": "Anda tidak memiliki sesi yang dijadwalkan untuk hari ini."
+      "title": "Tidak ada pertemuan hari ini",
+      "description": "Anda tidak memiliki jadwal pertemuan untuk hari ini."
     }
   },
   "groups": {
     "add": "Tambah Kelompok",
     "empty": {
       "title": "Belum ada kelompok",
-      "description": "Buat kelompok pertama Anda untuk mulai menjadwalkan sesi."
+      "description": "Buat kelompok pertama Anda untuk mulai menjadwalkan pertemuan."
     },
     "kind": {
       "class": "Kelas",
       "individual": "Individu"
     },
     "tabs": {
-      "learners": "Peserta",
+      "learners": "Murid",
       "schedule": "Jadwal",
-      "upcoming_sessions": "Sesi Mendatang"
+      "upcoming_sessions": "Pertemuan Mendatang",
+      "notes": "Catatan"
     },
-    "empty_learners": "Belum ada peserta di kelompok ini.",
+    "empty_learners": "Belum ada murid di kelompok ini.",
     "empty_rules": "Belum ada aturan jadwal.",
-    "empty_sessions": "Belum ada sesi mendatang."
+    "empty_sessions": "Tidak ada pertemuan mendatang."
+  },
+  "learners": {
+    "notes": "Catatan"
   },
   "attendance": {
     "session_status": {
       "scheduled": "Terjadwal",
       "held": "Terlaksana",
       "cancelled": "Dibatalkan",
-      "rescheduled": "Dijadwal ulang"
+      "rescheduled": "Dijadwalkan ulang"
     },
     "status": {
       "present": "Hadir",
-      "absent": "Absen",
+      "absent": "Tidak Hadir",
       "late": "Terlambat",
       "excused": "Izin"
     }
   },
   "sessions": {
+    "detail": {
+      "title": "Rincian Pertemuan",
+      "plan": "Rencana",
+      "notes": "Catatan",
+      "attendance": "Kehadiran",
+      "save_attendance": "Simpan kehadiran",
+      "attendance_saved": "Kehadiran tersimpan"
+    },
     "status": {
       "scheduled": "Terjadwal",
       "held": "Terlaksana",
       "cancelled": "Dibatalkan",
-      "rescheduled": "Dijadwal ulang"
+      "rescheduled": "Dijadwalkan ulang"
     },
     "overlap": "Tumpang tindih dengan {{group}}"
   },
   "nav": {
-    "today": "Hari ini",
-    "week": "Minggu",
+    "today": "Hari Ini",
+    "week": "Pekan",
     "groups": "Kelompok",
     "plans": "Rencana",
     "more": "Lainnya"
@@ -128,36 +207,36 @@
     "title": "Pengaturan",
     "language": "Bahasa",
     "timezone": {
-      "label": "Zona waktu",
-      "notice": "Mengubah zona waktu tidak akan mengubah sesi yang sudah ada."
+      "label": "Zona Waktu",
+      "notice": "Mengubah zona waktu tidak mengubah jadwal yang sudah ada."
     },
     "week_start": {
-      "label": "Awal minggu",
+      "label": "Pekan dimulai pada",
       "sunday": "Minggu",
       "monday": "Senin",
       "saturday": "Sabtu"
     },
     "group_label": {
-      "label": "Kata ganti kelompok",
+      "label": "Sebutan kelompok",
       "group": "Kelompok",
       "class": "Kelas"
     },
     "modules": {
       "title": "Modul",
       "plans": "Rencana",
-      "plans_desc": "Konten rencana untuk sesi",
+      "plans_desc": "Konten rencana untuk pertemuan",
       "notes": "Catatan",
-      "notes_desc": "Catatan bebas",
+      "notes_desc": "Catatan pengamatan bebas",
       "assessments": "Penilaian",
-      "assessments_desc": "Tugas dan nilai",
-      "progress_levels": "Level Kemampuan",
-      "progress_levels_desc": "Pelacakan level kemampuan"
+      "assessments_desc": "Tugas penilaian dan skor",
+      "progress_levels": "Tingkat Kemajuan",
+      "progress_levels_desc": "Pelacakan tingkat kemahiran"
     }
   },
   "more": {
     "title": "Lainnya",
     "notes": "Catatan",
-    "workplaces": "Tempat Mengajar",
+    "workplaces": "Tempat Kerja",
     "settings": "Pengaturan",
     "about": "Tentang"
   }

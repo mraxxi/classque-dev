@@ -67,7 +67,74 @@
   "errors": {
     "not_found": "Resource not found",
     "forbidden": "Access denied",
-    "validation_failed": "Validation failed"
+    "validation_failed": "Validation failed",
+    "note_target_required": "Note must attach to a session, group, or learner",
+    "required": "This field is required"
+  },
+  "plans": {
+    "title": "Plans",
+    "new": "New plan",
+    "edit": "Edit plan",
+    "duplicate": {
+      "title_suffix": "{{title}} (copy)"
+    },
+    "used_in_sessions": "Used in {{count}} sessions",
+    "used_in_sessions_one": "Used in 1 session",
+    "used_in_sessions_other": "Used in {{count}} sessions",
+    "empty": {
+      "title": "No plans yet",
+      "description": "Create a plan to organize your session activities."
+    },
+    "search_placeholder": "Search plans......",
+    "all_packs": "All subjects",
+    "show_archived": "Show archived",
+    "archived_tag": "Archived",
+    "multi_session": {
+      "title": "Plan attached to multiple sessions",
+      "description": "This plan is currently used in {{count}} sessions. How would you like to apply your edits?",
+      "edit_all": "Edit for all",
+      "duplicate_edit": "Duplicate and edit"
+    },
+    "print": "Print plan",
+    "attach": "Attach plan",
+    "detach": "Detach plan",
+    "reuse_earlier": "Reuse plan from an earlier session",
+    "choose_existing": "Choose existing plan",
+    "no_plan_attached": "No plan attached",
+    "unsaved_warning": "You have unsaved changes. Are you sure you want to leave?",
+    "draft_notice": "Unsaved draft",
+    "load_draft": "Load draft",
+    "discard_draft": "Discard",
+    "no_items": "No items yet",
+    "no_pairs": "No pairs yet",
+    "pair_number": "Pair #{{number}}",
+    "form": {
+      "title": "Title",
+      "title_placeholder": "e.g. Unit 3 Review",
+      "pack": "Subject",
+      "add_item": "Add item",
+      "add_pair": "Add vocabulary pair",
+      "term": "Term",
+      "definition": "Definition",
+      "other_sections": "Other sections"
+    }
+  },
+  "notes": {
+    "title": "Notes",
+    "add": "Add note",
+    "edit": "Edit note",
+    "delete_confirm": "Are you sure you want to delete this note?",
+    "empty": "No notes yet",
+    "placeholder": "Type your note here...",
+    "target": {
+      "session": "Session",
+      "group": "Group",
+      "learner": "Learner",
+      "all_learners": "Whole group / session"
+    },
+    "recent_notes": "Recent Notes",
+    "draft_notice": "Draft",
+    "clear_draft": "Clear draft"
   },
   "today": {
     "empty": {
@@ -88,11 +155,15 @@
     "tabs": {
       "learners": "Learners",
       "schedule": "Schedule",
-      "upcoming_sessions": "Upcoming Sessions"
+      "upcoming_sessions": "Upcoming Sessions",
+      "notes": "Notes"
     },
     "empty_learners": "No learners in this group yet.",
     "empty_rules": "No schedule rules yet.",
     "empty_sessions": "No upcoming sessions."
+  },
+  "learners": {
+    "notes": "Notes"
   },
   "attendance": {
     "session_status": {
@@ -109,6 +180,14 @@
     }
   },
   "sessions": {
+    "detail": {
+      "title": "Session Detail",
+      "plan": "Plan",
+      "notes": "Notes",
+      "attendance": "Attendance",
+      "save_attendance": "Save attendance",
+      "attendance_saved": "Attendance saved"
+    },
     "status": {
       "scheduled": "Scheduled",
       "held": "Held",

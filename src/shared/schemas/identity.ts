@@ -5,7 +5,8 @@ export const UpdateMeSchema = z.object({
   timezone: z.string().optional(),
   week_start: z.union([z.literal(0), z.literal(1), z.literal(6)]).optional(),
   group_label: z.enum(['group', 'class']).optional(),
-  display_name: z.string().min(1).optional()
+  display_name: z.string().min(1).optional(),
+  enabled_modules: z.array(z.string()).optional()
 });
 
 export type UpdateMe = z.infer<typeof UpdateMeSchema>;
@@ -19,4 +20,3 @@ export const IdentitySchema = z.object({
 });
 
 export type Identity = z.infer<typeof IdentitySchema>;
-

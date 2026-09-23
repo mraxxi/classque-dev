@@ -99,9 +99,14 @@ export class SessionsRepo {
   // --- Sessions ---
 
   async getSession(accountId: string, sessionId: string) {
-    return this.db.prepare(
-      'SELECT * FROM sessions WHERE account_id = ? AND id = ?'
-    ).bind(accountId, sessionId).first();
+    return this.db.prepare(`
+      SELECT s.*, g.name as group_name, g.color as group_color, g.workplace_id,
+             p.title as plan_title, p.archived_at as plan_archived_at, p.content as plan_content, p.pack_id as plan_pack_id
+      FROM sessions s
+      JOIN groups g ON s.group_id = g.id
+      LEFT JOIN plans p ON s.plan_id = p.id AND s.account_id = p.account_id
+      WHERE s.account_id = ? AND s.id = ?
+    `).bind(accountId, sessionId).first();
   }
 
   async listSessionsInRange(accountId: string, fromDate: string, toDate: string, workplaceId?: string, groupId?: string) {
@@ -110,10 +115,12 @@ export class SessionsRepo {
     // Relies on index: idx_sessions_range (account_id, session_date)
     let query = `
       SELECT s.*, g.name as group_name, g.color as group_color, g.workplace_id,
+             p.title as plan_title, p.archived_at as plan_archived_at,
              (SELECT count(*) FROM attendance a WHERE a.session_id = s.id AND a.status = 'present') as present_count,
              (SELECT count(*) FROM attendance a WHERE a.session_id = s.id) as marked_count
       FROM sessions s
       JOIN groups g ON s.group_id = g.id
+      LEFT JOIN plans p ON s.plan_id = p.id AND s.account_id = p.account_id
       WHERE s.account_id = ? AND s.session_date >= ? AND s.session_date <= ?
     `;
     const params: any[] = [accountId, fromDate, toDate];
@@ -134,6 +141,14 @@ export class SessionsRepo {
     return res.results;
   }
 
+  async setPlan(accountId: string, sessionId: string, planId: string | null) {
+    const now = new Date().toISOString();
+    await this.db.prepare(`
+      UPDATE sessions SET plan_id = ?, is_exception = 1, updated_at = ? WHERE account_id = ? AND id = ?
+    `).bind(planId, now, accountId, sessionId).run();
+    return this.getSession(accountId, sessionId);
+  }
+
   // For batch inserts during top-up
   async insertSessionsBatch(sessionsData: any[]) {
     if (sessionsData.length === 0) return 0;
@@ -141,8 +156,7 @@ export class SessionsRepo {
     const stmts = sessionsData.map(s => {
       // Create session using INSERT OR IGNORE to maintain idempotency via uq_sessions_rule_slot
       return this.db.prepare(`
-        INSERT OR IGNORE INTO sessions (
-          id, account_id, group_id, rule_id, session_date, start_time, duration_min, tz, status, room, created_at, updated_at
+        INSERT OR IGNORE INTO sessions (\n          id, account_id, group_id, rule_id, session_date, start_time, duration_min, tz, status, room, created_at, updated_at
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'scheduled', ?, ?, ?)
       `).bind(
         generateId(), s.accountId, s.groupId, s.ruleId, s.sessionDate, s.startTime, s.durationMin, s.tz, s.room || null, s.now, s.now
@@ -167,8 +181,7 @@ export class SessionsRepo {
     const id = generateId();
     const now = new Date().toISOString();
     await this.db.prepare(
-      `INSERT INTO sessions (
-        id, account_id, group_id, session_date, start_time, duration_min, tz, status, room, is_exception, created_at, updated_at
+      `INSERT INTO sessions (\n        id, account_id, group_id, session_date, start_time, duration_min, tz, status, room, is_exception, created_at, updated_at
       ) VALUES (?, ?, ?, ?, ?, ?, ?, 'scheduled', ?, 1, ?, ?)`
     ).bind(
       id, accountId, data.groupId, data.sessionDate, data.startTime, data.durationMin, tz, data.room || null, now, now

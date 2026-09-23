@@ -2,6 +2,7 @@ import { Hono } from 'hono';
 import { SessionsRepo } from '../repositories/sessions.repo';
 import { CreateSessionSchema, UpdateSessionSchema, RescheduleSessionSchema } from '../../shared/schemas/schedule';
 import { SaveAttendanceSchema } from '../../shared/schemas/attendance';
+import { AttachPlanSchema } from '../../shared/schemas/plans';
 import { Identity } from '../../shared/schemas/identity';
 import { AppError } from '../../shared/errors';
 import { AttendanceRepo } from '../repositories/attendance.repo';
@@ -113,6 +114,23 @@ sessionsRouter.post('/:id/reschedule', async (c) => {
 
   const session = await repo.getSession(identity.accountId, newId);
   return c.json(session, 201);
+});
+
+// --- Plan Attachment (PLN-003) ---
+
+sessionsRouter.put('/:id/plan', async (c) => {
+  const identity = c.get('identity');
+  const sessionId = c.req.param('id');
+  const repo = new SessionsRepo(c.env.DB);
+
+  const session = await repo.getSession(identity.accountId, sessionId);
+  if (!session) throw new AppError('not_found', 'errors.not_found');
+
+  const body = await c.req.json();
+  const { planId } = AttachPlanSchema.parse(body);
+
+  const updated = await repo.setPlan(identity.accountId, sessionId, planId);
+  return c.json(updated);
 });
 
 // --- Attendance ---

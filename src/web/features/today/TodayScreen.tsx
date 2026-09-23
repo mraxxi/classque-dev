@@ -3,12 +3,15 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { api } from '../../lib/api';
 import { SessionCard } from '../../components/SessionCard';
 import { WorkplaceSwitcher } from '../../components/WorkplaceSwitcher';
+import { FloatingAddNoteButton } from '../../components/FloatingAddNoteButton';
 import { useState, useEffect } from 'react';
 import { useIdentity } from '../../hooks/useIdentity';
+import { useSettings } from '../../hooks/useSettings';
 
 export function TodayScreen() {
   const { t } = useTranslation();
   const { data: identity } = useIdentity();
+  const { isModuleEnabled } = useSettings();
   const [activeWorkplaceId, setActiveWorkplaceId] = useState<string | null>(identity?.accountId || null);
   const queryClient = useQueryClient();
 
@@ -22,8 +25,7 @@ export function TodayScreen() {
     refetchOnWindowFocus: true, // "Refetch on window focus is allowed only for the Today view"
   });
 
-  // TopUp mutation (called when Today is loaded, though spec says client calls it once a day)
-  // For simplicity, we just trigger it once per mount if activeWorkplaceId is set.
+  // TopUp mutation
   useEffect(() => {
     if (activeWorkplaceId) {
       api.schedule.topUp(localToday).then(() => {
@@ -33,7 +35,7 @@ export function TodayScreen() {
   }, [activeWorkplaceId, localToday, queryClient]);
 
   return (
-    <div className="flex flex-col h-full bg-gray-50">
+    <div className="flex flex-col h-full bg-gray-50 pb-20">
       <WorkplaceSwitcher 
         activeId={activeWorkplaceId} 
         onChange={setActiveWorkplaceId} 
@@ -68,6 +70,10 @@ export function TodayScreen() {
           ))}
         </div>
       </div>
+
+      {isModuleEnabled('notes') && (
+        <FloatingAddNoteButton onNoteAdded={() => queryClient.invalidateQueries({ queryKey: ['notes'] })} />
+      )}
     </div>
   );
 }

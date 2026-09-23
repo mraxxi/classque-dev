@@ -40,9 +40,9 @@ export class IdentityRepository {
         VALUES (?, ?, ?, ?, ?, ?, ?)
       `).bind(userId, email, displayName, locale, timezone, now, now),
       this.db.prepare(`
-        INSERT INTO accounts (id, name, created_at, updated_at)
-        VALUES (?, ?, ?, ?)
-      `).bind(accountId, `${displayName}'s Account`, now, now),
+        INSERT INTO accounts (id, name, enabled_modules, created_at, updated_at)
+        VALUES (?, ?, ?, ?, ?)
+      `).bind(accountId, `${displayName}'s Account`, JSON.stringify(['plans', 'notes']), now, now),
       this.db.prepare(`
         INSERT INTO memberships (account_id, user_id, role, created_at)
         VALUES (?, ?, ?, ?)
@@ -62,7 +62,7 @@ export class IdentityRepository {
     };
   }
   
-  async updateMe(userId: string, data: { locale?: string, timezone?: string, week_start?: number, group_label?: string, display_name?: string }) {
+  async updateMe(userId: string, data: { locale?: string, timezone?: string, week_start?: number, group_label?: string, display_name?: string, enabled_modules?: string[] }) {
     const sets: string[] = [];
     const values: any[] = [];
     
@@ -72,15 +72,21 @@ export class IdentityRepository {
     if (data.group_label !== undefined) { sets.push('group_label = ?'); values.push(data.group_label); }
     if (data.display_name !== undefined) { sets.push('display_name = ?'); values.push(data.display_name); }
     
-    if (sets.length === 0) return;
-    
-    sets.push('updated_at = ?');
-    values.push(getNowInstant());
-    
-    values.push(userId);
-    
-    await this.db.prepare(`
-      UPDATE users SET ${sets.join(', ')} WHERE id = ?
-    `).bind(...values).run();
+    if (sets.length > 0) {
+      sets.push('updated_at = ?');
+      values.push(getNowInstant());
+      values.push(userId);
+      await this.db.prepare(`
+        UPDATE users SET ${sets.join(', ')} WHERE id = ?
+      `).bind(...values).run();
+    }
+
+    if (data.enabled_modules !== undefined) {
+      await this.db.prepare(`
+        UPDATE accounts 
+        SET enabled_modules = ?, updated_at = ?
+        WHERE id = (SELECT account_id FROM memberships WHERE user_id = ?)
+      `).bind(JSON.stringify(data.enabled_modules), getNowInstant(), userId).run();
+    }
   }
 }

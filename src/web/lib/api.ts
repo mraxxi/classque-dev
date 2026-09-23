@@ -75,8 +75,43 @@ export const api = {
     cancel: (id: string) => fetchApi(`/sessions/${id}/cancel`, { method: 'POST' }),
     undoHeld: (id: string) => fetchApi(`/sessions/${id}/undo-held`, { method: 'POST' }),
     reschedule: (id: string, data: any) => fetchApi(`/sessions/${id}/reschedule`, { method: 'POST', body: JSON.stringify(data) }),
+    setPlan: (sessionId: string, planId: string | null) => fetchApi(`/sessions/${sessionId}/plan`, { method: 'PUT', body: JSON.stringify({ planId }) }),
     getAttendance: (id: string) => fetchApi(`/sessions/${id}/attendance`),
     saveAttendance: (id: string, data: any) => fetchApi(`/sessions/${id}/attendance`, { method: 'PUT', body: JSON.stringify(data) })
+  },
+  plans: {
+    list: (params: { q?: string; packId?: string; includeArchived?: boolean; cursor?: string; limit?: number } = {}) => {
+      const q = new URLSearchParams();
+      if (params.q) q.set('q', params.q);
+      if (params.packId) q.set('packId', params.packId);
+      if (params.includeArchived) q.set('includeArchived', 'true');
+      if (params.cursor) q.set('cursor', params.cursor);
+      if (params.limit) q.set('limit', String(params.limit));
+      const str = q.toString();
+      return fetchApi(`/plans${str ? `?${str}` : ''}`);
+    },
+    get: (id: string) => fetchApi(`/plans/${id}`),
+    create: (data: { title: string; packId?: string; content?: Record<string, any> }) => fetchApi('/plans', { method: 'POST', body: JSON.stringify(data) }),
+    update: (id: string, data: { title?: string; content?: Record<string, any> }) => fetchApi(`/plans/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
+    duplicate: (id: string) => fetchApi(`/plans/${id}/duplicate`, { method: 'POST' }),
+    archive: (id: string) => fetchApi(`/plans/${id}/archive`, { method: 'POST' }),
+    restore: (id: string) => fetchApi(`/plans/${id}/restore`, { method: 'POST' })
+  },
+  notes: {
+    list: (params: { learnerId?: string; groupId?: string; sessionId?: string; cursor?: string; limit?: number } = {}) => {
+      const q = new URLSearchParams();
+      if (params.learnerId) q.set('learnerId', params.learnerId);
+      if (params.groupId) q.set('groupId', params.groupId);
+      if (params.sessionId) q.set('sessionId', params.sessionId);
+      if (params.cursor) q.set('cursor', params.cursor);
+      if (params.limit) q.set('limit', String(params.limit));
+      const str = q.toString();
+      return fetchApi(`/notes${str ? `?${str}` : ''}`);
+    },
+    get: (id: string) => fetchApi(`/notes/${id}`),
+    create: (data: { body: string; sessionId?: string | null; groupId?: string | null; learnerId?: string | null }) => fetchApi('/notes', { method: 'POST', body: JSON.stringify(data) }),
+    update: (id: string, data: { body: string }) => fetchApi(`/notes/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
+    delete: (id: string) => fetchApi(`/notes/${id}`, { method: 'DELETE' })
   },
   schedule: {
     topUp: (localToday: string) => fetchApi('/schedule/top-up', { method: 'POST', body: JSON.stringify({ localToday }) })

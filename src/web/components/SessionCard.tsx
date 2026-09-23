@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useLabel } from '../hooks/useLabel';
 import { formatTime } from '../lib/date';
 import { useIdentity } from '../hooks/useIdentity';
+import { useSettings } from '../hooks/useSettings';
 import { Link } from 'react-router-dom';
 
 export interface SessionCardProps {
@@ -14,9 +15,9 @@ export function SessionCard({ session, group, onClick }: SessionCardProps) {
   const { t } = useTranslation();
   const groupLabel = useLabel('group');
   const { data: identity } = useIdentity();
+  const { isModuleEnabled } = useSettings();
   
   const locale = identity?.locale || 'en';
-  
   const formattedTime = formatTime(session.start_time, locale);
 
   return (
@@ -26,14 +27,26 @@ export function SessionCard({ session, group, onClick }: SessionCardProps) {
       className="block bg-white border border-gray-200 rounded-lg p-4 shadow-sm active:bg-gray-50 transition-colors mb-3"
     >
       <div className="flex justify-between items-start">
-        <div>
+        <div className="space-y-1">
           <h3 className="font-semibold text-gray-900 text-lg">{group?.name || groupLabel}</h3>
-          <div className="text-gray-500 text-sm mt-1">
+          <div className="text-gray-500 text-sm">
             {formattedTime} • {session.duration_min} {t('common.minutes')}
           </div>
           {session.room && (
-            <div className="text-gray-500 text-sm mt-1 flex items-center">
+            <div className="text-gray-500 text-sm flex items-center">
               <span className="mr-1">🚪</span> {session.room}
+            </div>
+          )}
+
+          {isModuleEnabled('plans') && session.plan_title && (
+            <div className="pt-1 flex items-center gap-1.5 text-xs text-blue-700">
+              <span>📋</span>
+              <span className="font-medium truncate max-w-[200px]">{session.plan_title}</span>
+              {session.plan_archived_at && (
+                <span className="bg-gray-200 text-gray-600 px-1 py-0.2 rounded text-[10px]">
+                  {t('plans.archived_tag')}
+                </span>
+              )}
             </div>
           )}
         </div>
