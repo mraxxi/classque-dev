@@ -1,0 +1,164 @@
+{
+  "pack": {
+    "generic": {
+      "name": "General",
+      "plan": {
+        "objectives": "Objectives",
+        "activities": "Activities",
+        "materials": "Materials",
+        "notes": "Notes"
+      },
+      "assessment": {
+        "quiz": "Quiz",
+        "test": "Test",
+        "assignment": "Assignment",
+        "project": "Project"
+      }
+    },
+    "english": {
+      "name": "English",
+      "plan": {
+        "objectives": "Objectives",
+        "warm_up": "Warm-up",
+        "presentation": "Presentation",
+        "practice": "Practice",
+        "production": "Production",
+        "wrap_up": "Wrap-up",
+        "vocabulary": "Vocabulary",
+        "grammar_focus": "Grammar focus",
+        "materials": "Materials",
+        "homework": "Homework"
+      },
+      "assessment": {
+        "quiz": "Quiz",
+        "test": "Test",
+        "homework": "Homework",
+        "speaking": "Speaking task",
+        "writing": "Writing task",
+        "listening": "Listening task",
+        "reading": "Reading task"
+      },
+      "skill": {
+        "reading": "Reading",
+        "writing": "Writing",
+        "listening": "Listening",
+        "speaking": "Speaking",
+        "vocabulary": "Vocabulary",
+        "grammar": "Grammar"
+      }
+    }
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "archive": "Archive",
+    "restore": "Restore",
+    "duplicate": "Duplicate",
+    "export": "Export",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "minutes": "min",
+    "days": "Days"
+  },
+  "errors": {
+    "not_found": "Resource not found",
+    "forbidden": "Access denied",
+    "validation_failed": "Validation failed"
+  },
+  "today": {
+    "empty": {
+      "title": "No sessions today",
+      "description": "You have no sessions scheduled for today."
+    }
+  },
+  "groups": {
+    "add": "Add Group",
+    "empty": {
+      "title": "No groups yet",
+      "description": "Create your first group to start scheduling sessions."
+    },
+    "kind": {
+      "class": "Class",
+      "individual": "Individual"
+    },
+    "tabs": {
+      "learners": "Learners",
+      "schedule": "Schedule",
+      "upcoming_sessions": "Upcoming Sessions"
+    },
+    "empty_learners": "No learners in this group yet.",
+    "empty_rules": "No schedule rules yet.",
+    "empty_sessions": "No upcoming sessions."
+  },
+  "attendance": {
+    "session_status": {
+      "scheduled": "Scheduled",
+      "held": "Held",
+      "cancelled": "Cancelled",
+      "rescheduled": "Rescheduled"
+    },
+    "status": {
+      "present": "Present",
+      "absent": "Absent",
+      "late": "Late",
+      "excused": "Excused"
+    }
+  },
+  "sessions": {
+    "status": {
+      "scheduled": "Scheduled",
+      "held": "Held",
+      "cancelled": "Cancelled",
+      "rescheduled": "Rescheduled"
+    },
+    "overlap": "Overlaps with {{group}}"
+  },
+  "nav": {
+    "today": "Today",
+    "week": "Week",
+    "groups": "Groups",
+    "plans": "Plans",
+    "more": "More"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "timezone": {
+      "label": "Timezone",
+      "notice": "Changing timezone does not alter existing sessions."
+    },
+    "week_start": {
+      "label": "Week starts on",
+      "sunday": "Sunday",
+      "monday": "Monday",
+      "saturday": "Saturday"
+    },
+    "group_label": {
+      "label": "Group display word",
+      "group": "Group",
+      "class": "Class"
+    },
+    "modules": {
+      "title": "Modules",
+      "plans": "Plans",
+      "plans_desc": "Plan content for sessions",
+      "notes": "Notes",
+      "notes_desc": "Free-text observations",
+      "assessments": "Assessments",
+      "assessments_desc": "Graded tasks and scores",
+      "progress_levels": "Progress Levels",
+      "progress_levels_desc": "Proficiency band tracking"
+    }
+  },
+  "more": {
+    "title": "More",
+    "notes": "Notes",
+    "workplaces": "Workplaces",
+    "settings": "Settings",
+    "about": "About"
+  }
+}

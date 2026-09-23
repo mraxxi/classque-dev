@@ -1,0 +1,164 @@
+{
+  "pack": {
+    "generic": {
+      "name": "Umum",
+      "plan": {
+        "objectives": "Tujuan",
+        "activities": "Kegiatan",
+        "materials": "Bahan",
+        "notes": "Catatan"
+      },
+      "assessment": {
+        "quiz": "Kuis",
+        "test": "Tes",
+        "assignment": "Tugas",
+        "project": "Proyek"
+      }
+    },
+    "english": {
+      "name": "Bahasa Inggris",
+      "plan": {
+        "objectives": "Tujuan",
+        "warm_up": "Pemanasan",
+        "presentation": "Penyajian",
+        "practice": "Latihan",
+        "production": "Produksi",
+        "wrap_up": "Penutup",
+        "vocabulary": "Kosakata",
+        "grammar_focus": "Fokus tata bahasa",
+        "materials": "Bahan",
+        "homework": "Pekerjaan rumah"
+      },
+      "assessment": {
+        "quiz": "Kuis",
+        "test": "Tes",
+        "homework": "Pekerjaan rumah",
+        "speaking": "Tugas berbicara",
+        "writing": "Tugas menulis",
+        "listening": "Tugas menyimak",
+        "reading": "Tugas membaca"
+      },
+      "skill": {
+        "reading": "Membaca",
+        "writing": "Menulis",
+        "listening": "Menyimak",
+        "speaking": "Berbicara",
+        "vocabulary": "Kosakata",
+        "grammar": "Tata bahasa"
+      }
+    }
+  },
+  "common": {
+    "save": "Simpan",
+    "cancel": "Batal",
+    "add": "Tambah",
+    "edit": "Ubah",
+    "delete": "Hapus",
+    "archive": "Arsipkan",
+    "restore": "Pulihkan",
+    "duplicate": "Duplikat",
+    "export": "Ekspor",
+    "loading": "Memuat...",
+    "error": "Terjadi kesalahan",
+    "retry": "Coba lagi",
+    "minutes": "menit",
+    "days": "Hari"
+  },
+  "errors": {
+    "not_found": "Sumber tidak ditemukan",
+    "forbidden": "Akses ditolak",
+    "validation_failed": "Validasi gagal"
+  },
+  "today": {
+    "empty": {
+      "title": "Tidak ada sesi hari ini",
+      "description": "Anda tidak memiliki sesi yang dijadwalkan untuk hari ini."
+    }
+  },
+  "groups": {
+    "add": "Tambah Kelompok",
+    "empty": {
+      "title": "Belum ada kelompok",
+      "description": "Buat kelompok pertama Anda untuk mulai menjadwalkan sesi."
+    },
+    "kind": {
+      "class": "Kelas",
+      "individual": "Individu"
+    },
+    "tabs": {
+      "learners": "Peserta",
+      "schedule": "Jadwal",
+      "upcoming_sessions": "Sesi Mendatang"
+    },
+    "empty_learners": "Belum ada peserta di kelompok ini.",
+    "empty_rules": "Belum ada aturan jadwal.",
+    "empty_sessions": "Belum ada sesi mendatang."
+  },
+  "attendance": {
+    "session_status": {
+      "scheduled": "Terjadwal",
+      "held": "Terlaksana",
+      "cancelled": "Dibatalkan",
+      "rescheduled": "Dijadwal ulang"
+    },
+    "status": {
+      "present": "Hadir",
+      "absent": "Absen",
+      "late": "Terlambat",
+      "excused": "Izin"
+    }
+  },
+  "sessions": {
+    "status": {
+      "scheduled": "Terjadwal",
+      "held": "Terlaksana",
+      "cancelled": "Dibatalkan",
+      "rescheduled": "Dijadwal ulang"
+    },
+    "overlap": "Tumpang tindih dengan {{group}}"
+  },
+  "nav": {
+    "today": "Hari ini",
+    "week": "Minggu",
+    "groups": "Kelompok",
+    "plans": "Rencana",
+    "more": "Lainnya"
+  },
+  "settings": {
+    "title": "Pengaturan",
+    "language": "Bahasa",
+    "timezone": {
+      "label": "Zona waktu",
+      "notice": "Mengubah zona waktu tidak akan mengubah sesi yang sudah ada."
+    },
+    "week_start": {
+      "label": "Awal minggu",
+      "sunday": "Minggu",
+      "monday": "Senin",
+      "saturday": "Sabtu"
+    },
+    "group_label": {
+      "label": "Kata ganti kelompok",
+      "group": "Kelompok",
+      "class": "Kelas"
+    },
+    "modules": {
+      "title": "Modul",
+      "plans": "Rencana",
+      "plans_desc": "Konten rencana untuk sesi",
+      "notes": "Catatan",
+      "notes_desc": "Catatan bebas",
+      "assessments": "Penilaian",
+      "assessments_desc": "Tugas dan nilai",
+      "progress_levels": "Level Kemampuan",
+      "progress_levels_desc": "Pelacakan level kemampuan"
+    }
+  },
+  "more": {
+    "title": "Lainnya",
+    "notes": "Catatan",
+    "workplaces": "Tempat Mengajar",
+    "settings": "Pengaturan",
+    "about": "Tentang"
+  }
+}

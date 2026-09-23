@@ -11,6 +11,11 @@ dist/
 .env
 .env.*
 !.env.example
+.dev.vars
+!.dev.vars.example
+
+# TypeScript build info
+*.tsbuildinfo
 
 # Logs
 logs

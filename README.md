@@ -21,6 +21,7 @@ npm install
 ## 2. GitHub Setup
 
 ### A. Set your Git identity (already configured)
+(github cli is also installed)
 ```bash
 git config --global user.name "mraxxi"
 git config --global user.email "49807069+mraxxi@users.noreply.github.com"
@@ -81,7 +82,7 @@ npm run db:migrate:local
 ```bash
 npm run dev
 ```
-Open [http://localhost:8787](http://localhost:8787) or [http://localhost:8787/api/users](http://localhost:8787/api/users) to verify D1 reads.
+Open [http://localhost:5173](http://localhost:5173) or [http://localhost:5173/api/v1/health](http://localhost:5173/api/v1/health) to verify app and API connectivity.
 
 ### C. Execute raw SQL query locally
 ```bash
@@ -90,14 +91,12 @@ npx wrangler d1 execute classque-db --local --command="SELECT * FROM users;"
 
 ---
 
-## 5. Deployment
+## 5. Environment & Cloudflare Setup
 
-### A. Apply migrations to the production D1 database
-```bash
-npm run db:migrate:remote
-```
+To set up Cloudflare Access JWT validation in production, the following secrets must be set on the worker (via `wrangler secret put`):
+- `ACCESS_TEAM_DOMAIN`: e.g. `your-team.cloudflareaccess.com`
+- `ACCESS_AUD`: The audience tag of the Cloudflare Access application
 
-### B. Deploy Worker to Cloudflare
-```bash
-npm run deploy
-```
+Local development relies on `.dev.vars` (see `.dev.vars.example`) to bypass Access using `DEV_USER_EMAIL`.
+
+> **Note:** As per H10 (Terminal Safety), we do not run remote migrations (`--remote`) or deploy to production from local environments. This repository strictly uses `db:migrate:local` and `db:reset:local` for safety.
