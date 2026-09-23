@@ -201,7 +201,9 @@
     "week": "Pekan",
     "groups": "Kelompok",
     "plans": "Rencana",
-    "more": "Lainnya"
+    "more": "Lainnya",
+    "notes": "Catatan",
+    "settings": "Pengaturan"
   },
   "settings": {
     "title": "Pengaturan",

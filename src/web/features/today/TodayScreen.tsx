@@ -35,32 +35,41 @@ export function TodayScreen() {
   }, [activeWorkplaceId, localToday, queryClient]);
 
   return (
-    <div className="flex flex-col h-full bg-gray-50 pb-20">
-      <WorkplaceSwitcher 
-        activeId={activeWorkplaceId} 
-        onChange={setActiveWorkplaceId} 
-      />
+    <div className="flex flex-col h-full bg-gray-50 pb-20 md:pb-8">
+      <div className="bg-white border-b border-gray-200">
+        <WorkplaceSwitcher 
+          activeId={activeWorkplaceId} 
+          onChange={setActiveWorkplaceId} 
+        />
+      </div>
       
-      <div className="p-4 flex-1">
-        <h1 className="text-2xl font-bold text-gray-900 mb-6">{t('nav.today')}</h1>
+      <div className="p-4 md:p-6 flex-1 max-w-7xl mx-auto w-full">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">{t('nav.today')}</h1>
+            <p className="text-sm text-gray-500 mt-0.5">
+              {new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' })}
+            </p>
+          </div>
+        </div>
         
-        {isLoading && <div className="text-gray-500">{t('common.loading')}</div>}
+        {isLoading && <div className="text-gray-500 py-8 text-center">{t('common.loading')}</div>}
         
         {isError && (
-          <div className="bg-red-50 text-red-700 p-4 rounded-md">
+          <div className="bg-red-50 text-red-700 p-4 rounded-xl border border-red-200">
             {t('common.error')}
           </div>
         )}
         
         {!isLoading && !isError && sessions?.length === 0 && (
-          <div className="text-center py-10">
-            <div className="text-gray-400 mb-3 text-4xl">☕</div>
-            <h3 className="text-lg font-medium text-gray-900">{t('today.empty.title')}</h3>
+          <div className="text-center py-16 bg-white rounded-2xl border border-gray-200 shadow-sm p-6 max-w-lg mx-auto mt-6">
+            <div className="text-gray-400 mb-3 text-5xl">☕</div>
+            <h3 className="text-lg font-semibold text-gray-900">{t('today.empty.title')}</h3>
             <p className="mt-1 text-sm text-gray-500">{t('today.empty.description')}</p>
           </div>
         )}
 
-        <div className="space-y-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {sessions?.map((session: any) => (
             <SessionCard 
               key={session.id} 

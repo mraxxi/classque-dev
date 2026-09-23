@@ -28,7 +28,7 @@ export default defineConfig({
       manifest: {
         name: 'ClassQue',
         short_name: 'ClassQue',
-        description: 'Mobile-first web planner for teachers',
+        description: 'Responsive web planner for teachers',
         theme_color: '#ffffff',
         background_color: '#ffffff',
         display: 'standalone',

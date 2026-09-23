@@ -18,20 +18,22 @@ export function NotesScreen() {
   };
 
   return (
-    <div className="flex flex-col h-full bg-gray-50 pb-20">
-      <div className="bg-white border-b border-gray-200 p-4 sticky top-0 z-10">
-        <h1 className="text-2xl font-bold text-gray-900">{t('notes.title')}</h1>
+    <div className="flex flex-col h-full bg-gray-50 pb-20 md:pb-8">
+      <div className="bg-white border-b border-gray-200 p-4 md:p-6 sticky top-0 z-10 shadow-sm">
+        <div className="max-w-5xl mx-auto w-full">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900">{t('notes.title')}</h1>
+        </div>
       </div>
 
-      <div className="p-4 flex-1 overflow-y-auto max-w-xl mx-auto w-full">
+      <div className="p-4 md:p-6 flex-1 overflow-y-auto max-w-5xl mx-auto w-full">
         {isLoading && (
-          <div className="text-center py-10 text-gray-500 text-sm">
+          <div className="text-center py-12 text-gray-500 text-sm">
             {t('common.loading')}
           </div>
         )}
 
         {isError && (
-          <div className="bg-red-50 text-red-700 p-4 rounded-lg text-sm">
+          <div className="bg-red-50 text-red-700 p-4 rounded-xl border border-red-200 text-sm">
             {t('common.error')}
           </div>
         )}

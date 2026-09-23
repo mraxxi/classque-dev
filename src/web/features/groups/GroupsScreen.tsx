@@ -19,45 +19,47 @@ export function GroupsScreen() {
   });
 
   return (
-    <div className="flex flex-col h-full bg-gray-50">
-      <WorkplaceSwitcher 
-        activeId={activeWorkplaceId} 
-        onChange={setActiveWorkplaceId} 
-      />
+    <div className="flex flex-col h-full bg-gray-50 pb-20 md:pb-8">
+      <div className="bg-white border-b border-gray-200">
+        <WorkplaceSwitcher 
+          activeId={activeWorkplaceId} 
+          onChange={setActiveWorkplaceId} 
+        />
+      </div>
       
-      <div className="p-4 flex-1">
+      <div className="p-4 md:p-6 flex-1 max-w-7xl mx-auto w-full">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold text-gray-900">{groupLabel}</h1>
-          <button className="bg-indigo-600 text-white px-3 py-1.5 rounded-md text-sm font-medium hover:bg-indigo-700">
-            {t('groups.add')}
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900">{groupLabel || t('nav.groups')}</h1>
+          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 min-h-[44px] shadow-sm">
+            + {t('groups.add')}
           </button>
         </div>
         
-        {isLoading && <div className="text-gray-500">{t('common.loading')}</div>}
+        {isLoading && <div className="text-gray-500 py-8 text-center">{t('common.loading')}</div>}
         
         {isError && (
-          <div className="bg-red-50 text-red-700 p-4 rounded-md">
+          <div className="bg-red-50 text-red-700 p-4 rounded-xl border border-red-200">
             {t('common.error')}
           </div>
         )}
 
         {!isLoading && !isError && groups?.length === 0 && (
-          <div className="text-center py-10">
-            <div className="text-gray-400 mb-3 text-4xl">👥</div>
-            <h3 className="text-lg font-medium text-gray-900">{t('groups.empty.title')}</h3>
+          <div className="text-center py-16 bg-white rounded-2xl border border-gray-200 shadow-sm p-6 max-w-lg mx-auto mt-6">
+            <div className="text-gray-400 mb-3 text-5xl">👥</div>
+            <h3 className="text-lg font-semibold text-gray-900">{t('groups.empty.title')}</h3>
             <p className="mt-1 text-sm text-gray-500">{t('groups.empty.description')}</p>
           </div>
         )}
 
-        <div className="space-y-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {groups?.map((group: any) => (
             <Link 
               key={group.id} 
               to={`/groups/${group.id}`}
-              className="block bg-white border border-gray-200 rounded-lg p-4 shadow-sm active:bg-gray-50 transition-colors"
+              className="block bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:border-blue-400 active:bg-gray-50 transition-colors"
             >
-              <div className="font-semibold text-gray-900 text-lg">{group.name}</div>
-              <div className="text-gray-500 text-sm mt-1">
+              <div className="font-bold text-gray-900 text-lg mb-1">{group.name}</div>
+              <div className="text-gray-500 text-xs font-medium uppercase tracking-wider">
                 {t(`groups.kind.${group.kind}`)}
               </div>
             </Link>

@@ -74,7 +74,7 @@ export function FloatingAddNoteButton({
     <>
       <button
         onClick={handleOpen}
-        className="fixed bottom-20 right-4 z-40 w-14 h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg flex items-center justify-center min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        className="fixed bottom-20 md:bottom-6 right-4 md:right-6 z-40 w-14 h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg flex items-center justify-center min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-transform active:scale-95"
         aria-label={t('notes.add')}
       >
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -83,8 +83,8 @@ export function FloatingAddNoteButton({
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40">
-          <div className="bg-white w-full sm:max-w-lg rounded-t-2xl sm:rounded-2xl p-5 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40 p-0 sm:p-4">
+          <div className="bg-white w-full sm:max-w-lg rounded-t-2xl sm:rounded-2xl p-5 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto animate-in fade-in zoom-in-95">
             <div className="flex items-center justify-between pb-2 border-b border-gray-100">
               <div className="flex items-center gap-2">
                 <h2 className="text-lg font-bold text-gray-900">{t('notes.add')}</h2>
@@ -96,7 +96,7 @@ export function FloatingAddNoteButton({
               </div>
               <button
                 onClick={handleClose}
-                className="text-gray-400 hover:text-gray-600 p-2 min-h-[44px] min-w-[44px] flex items-center justify-center"
+                className="text-gray-400 hover:text-gray-600 p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg"
                 aria-label={t('common.cancel')}
               >
                 ✕
@@ -144,14 +144,14 @@ export function FloatingAddNoteButton({
                     type="button"
                     onClick={handleClose}
                     disabled={isSubmitting}
-                    className="min-h-[44px] px-4 py-2 text-sm text-gray-600 hover:text-gray-800"
+                    className="min-h-[44px] px-4 py-2 text-sm text-gray-600 hover:text-gray-800 rounded-lg"
                   >
                     {t('common.cancel')}
                   </button>
                   <button
                     type="submit"
                     disabled={isSubmitting || !body.trim()}
-                    className="min-h-[44px] px-5 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg disabled:opacity-50"
+                    className="min-h-[44px] px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg text-sm shadow-sm disabled:opacity-50"
                   >
                     {isSubmitting ? t('common.loading') : t('common.save')}
                   </button>

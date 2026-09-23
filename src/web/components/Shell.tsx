@@ -16,11 +16,11 @@ export function Shell() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50 pb-16">
-      <main className="flex-1 w-full max-w-md mx-auto bg-white shadow-sm min-h-screen">
+    <div className="flex flex-col md:flex-row min-h-screen bg-gray-50">
+      <Navigation />
+      <main className="flex-1 w-full min-h-screen pb-16 md:pb-0 overflow-x-hidden flex flex-col">
         <Outlet />
       </main>
-      <Navigation />
     </div>
   );
 }

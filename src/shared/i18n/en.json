@@ -201,7 +201,9 @@
     "week": "Week",
     "groups": "Groups",
     "plans": "Plans",
-    "more": "More"
+    "more": "More",
+    "notes": "Notes",
+    "settings": "Settings"
   },
   "settings": {
     "title": "Settings",

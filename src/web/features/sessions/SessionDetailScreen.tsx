@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { api } from '../../lib/api';
 import { useSettings } from '../../hooks/useSettings';
-import { AttendanceRoster, RosterRecord } from '../../components/AttendanceRoster';
+import { AttendanceRoster, type RosterRecord } from '../../components/AttendanceRoster';
+import { AttachPlanModal } from '../../components/AttachPlanModal';
 import { NotesList } from '../../components/NotesList';
 import { FloatingAddNoteButton } from '../../components/FloatingAddNoteButton';
-import { AttachPlanModal } from '../../components/AttachPlanModal';
 
 export function SessionDetailScreen() {
   const { id } = useParams<{ id: string }>();
@@ -21,53 +21,50 @@ export function SessionDetailScreen() {
   const [isSavingAttendance, setIsSavingAttendance] = useState(false);
   const [attendanceSaved, setAttendanceSaved] = useState(false);
 
-  // Load Session details
+  // Fetch session
   const { data: session, isLoading: isSessionLoading, isError: isSessionError } = useQuery({
     queryKey: ['sessions', id],
-    queryFn: () => api.sessions.get(id!)
+    queryFn: () => api.sessions.get(id!),
+    enabled: !!id
   });
 
-  // Load Attendance
-  const { isLoading: isAttLoading } = useQuery({
-    queryKey: ['sessions', id, 'attendance'],
-    queryFn: async () => {
-      const data = await api.sessions.getAttendance(id!);
-      setLocalRoster(data);
-      return data;
-    }
+  // Fetch attendance roster
+  const { data: serverRoster, isLoading: isAttLoading } = useQuery<RosterRecord[]>({
+    queryKey: ['attendance', id],
+    queryFn: () => api.sessions.getAttendance(id!),
+    enabled: !!id
   });
 
-  // Load Notes for this session (if notes module enabled)
+  const activeRoster: RosterRecord[] = localRoster ?? serverRoster ?? [];
+
+  // Fetch notes for session
   const { data: notes, isLoading: isNotesLoading } = useQuery({
     queryKey: ['notes', 'session', id],
     queryFn: () => api.notes.list({ sessionId: id! }),
-    enabled: isModuleEnabled('notes')
+    enabled: !!id && isModuleEnabled('notes')
   });
 
   const handleRosterChange = (learnerId: string, updates: Partial<RosterRecord>) => {
-    setLocalRoster(prev => {
-      if (!prev) return prev;
-      return prev.map(rec => (rec.learnerId === learnerId ? { ...rec, ...updates } : rec));
-    });
+    const base = localRoster ?? serverRoster;
+    if (!base) return;
+    setLocalRoster(base.map((rec: RosterRecord) => rec.learnerId === learnerId ? { ...rec, ...updates } : rec));
     setAttendanceSaved(false);
   };
 
   const handleSaveAttendance = async () => {
-    if (!localRoster) return;
+    const toSave = localRoster ?? serverRoster;
+    if (!toSave) return;
     setIsSavingAttendance(true);
     try {
-      const records = localRoster
-        .filter(r => r.status !== null)
-        .map(r => ({
-          learnerId: r.learnerId,
-          status: r.status as 'present' | 'late' | 'absent' | 'excused',
-          note: r.note || undefined
-        }));
-
-      await api.sessions.saveAttendance(id!, { records });
+      await api.sessions.saveAttendance(id!, toSave.map((r: RosterRecord) => ({
+        learnerId: r.learnerId,
+        status: r.status,
+        note: r.note
+      })));
       setAttendanceSaved(true);
       queryClient.invalidateQueries({ queryKey: ['sessions', id] });
       queryClient.invalidateQueries({ queryKey: ['sessions', 'today'] });
+      queryClient.invalidateQueries({ queryKey: ['attendance', id] });
     } catch (err: any) {
       alert(err?.messageKey ? t(err.messageKey) : t('common.error'));
     } finally {
@@ -76,7 +73,7 @@ export function SessionDetailScreen() {
   };
 
   const handleDetachPlan = async () => {
-    if (!confirm(t('plans.detach_confirm') || 'Detach plan from this session?')) return;
+    if (!confirm(t('plans.detach_confirm') || 'Detach this plan from the session?')) return;
     try {
       await api.sessions.setPlan(id!, null);
       queryClient.invalidateQueries({ queryKey: ['sessions', id] });
@@ -119,23 +116,23 @@ export function SessionDetailScreen() {
   const isCancelled = session.status === 'cancelled';
 
   return (
-    <div className="flex flex-col h-full bg-gray-50 pb-20">
+    <div className="flex flex-col h-full bg-gray-50 pb-20 md:pb-8">
       {/* Top Bar */}
-      <div className="bg-white border-b border-gray-200 p-4 sticky top-0 z-10">
-        <div className="flex items-center justify-between">
+      <div className="bg-white border-b border-gray-200 p-4 md:p-6 sticky top-0 z-10 shadow-sm">
+        <div className="max-w-5xl mx-auto w-full flex items-center justify-between">
           <div className="flex items-center gap-2">
             <button
               onClick={() => navigate(-1)}
-              className="text-gray-500 hover:text-gray-700 min-h-[44px] min-w-[44px] flex items-center justify-center -ml-2"
+              className="text-gray-500 hover:text-gray-700 min-h-[44px] min-w-[44px] flex items-center justify-center -ml-2 rounded-lg"
               aria-label="Back"
             >
               ←
             </button>
             <div>
-              <h1 className="text-xl font-bold text-gray-900 leading-tight">
+              <h1 className="text-xl md:text-2xl font-bold text-gray-900 leading-tight">
                 {session.group_name || 'Session'}
               </h1>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs md:text-sm text-gray-500">
                 {session.session_date} • {session.start_time} ({session.duration_min}m)
                 {session.room ? ` • ${session.room}` : ''}
               </p>
@@ -144,7 +141,7 @@ export function SessionDetailScreen() {
 
           <div className="flex items-center gap-2">
             <span
-              className={`text-xs px-2.5 py-1 rounded-full font-medium ${
+              className={`text-xs px-3 py-1 rounded-full font-medium ${
                 session.status === 'held'
                   ? 'bg-green-100 text-green-800'
                   : session.status === 'cancelled'
@@ -160,13 +157,13 @@ export function SessionDetailScreen() {
         </div>
       </div>
 
-      <div className="p-4 flex-1 overflow-y-auto space-y-6 max-w-xl mx-auto w-full">
+      <div className="p-4 md:p-6 flex-1 overflow-y-auto space-y-6 max-w-5xl mx-auto w-full">
         {/* Status Actions */}
         <div className="flex gap-2 flex-wrap">
           {isHeld && (
             <button
               onClick={handleUndoHeld}
-              className="min-h-[44px] px-3 py-1.5 text-xs text-amber-700 bg-amber-50 hover:bg-amber-100 rounded-lg border border-amber-200 font-medium"
+              className="min-h-[44px] px-3.5 py-2 text-xs text-amber-700 bg-amber-50 hover:bg-amber-100 rounded-lg border border-amber-200 font-medium"
             >
               {t('session.undo_held')}
             </button>
@@ -174,7 +171,7 @@ export function SessionDetailScreen() {
           {!isCancelled && session.status !== 'rescheduled' && (
             <button
               onClick={handleCancelSession}
-              className="min-h-[44px] px-3 py-1.5 text-xs text-red-600 bg-red-50 hover:bg-red-100 rounded-lg border border-red-200 font-medium"
+              className="min-h-[44px] px-3.5 py-2 text-xs text-red-600 bg-red-50 hover:bg-red-100 rounded-lg border border-red-200 font-medium"
             >
               {t('session.cancel')}
             </button>
@@ -183,7 +180,7 @@ export function SessionDetailScreen() {
 
         {/* Plan Section (PLN-003) */}
         {isModuleEnabled('plans') && (
-          <section className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm space-y-3">
+          <section className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm space-y-3">
             <div className="flex items-center justify-between">
               <h2 className="text-base font-bold text-gray-900 flex items-center gap-2">
                 <span>📋</span> {t('plans.title')}
@@ -217,7 +214,7 @@ export function SessionDetailScreen() {
             {session.plan_id ? (
               <div
                 onClick={() => navigate(`/plans/${session.plan_id}`)}
-                className="p-3 bg-blue-50/40 border border-blue-200 rounded-lg flex items-center justify-between cursor-pointer hover:bg-blue-50 transition-colors"
+                className="p-4 bg-blue-50/40 border border-blue-200 rounded-xl flex items-center justify-between cursor-pointer hover:bg-blue-50 transition-colors"
               >
                 <div>
                   <div className="font-semibold text-gray-900 text-sm flex items-center gap-2">
@@ -228,7 +225,7 @@ export function SessionDetailScreen() {
                       </span>
                     )}
                   </div>
-                  <span className="text-xs text-blue-600 underline mt-0.5 inline-block">
+                  <span className="text-xs text-blue-600 underline mt-1 inline-block">
                     {t('plans.view_edit') || 'View / edit plan'} →
                   </span>
                 </div>
@@ -242,16 +239,16 @@ export function SessionDetailScreen() {
         )}
 
         {/* Attendance Section */}
-        <section className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm space-y-4">
+        <section className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-base font-bold text-gray-900 flex items-center gap-2">
               <span>👥</span> {t('attendance.title')}
             </h2>
-            {localRoster && localRoster.length > 0 && (
+            {activeRoster.length > 0 && (
               <button
                 onClick={handleSaveAttendance}
                 disabled={isSavingAttendance}
-                className="min-h-[44px] px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg text-xs shadow-sm disabled:opacity-50"
+                className="min-h-[44px] px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg text-xs shadow-sm disabled:opacity-50"
               >
                 {isSavingAttendance ? t('common.loading') : t('attendance.save')}
               </button>
@@ -259,7 +256,7 @@ export function SessionDetailScreen() {
           </div>
 
           {attendanceSaved && (
-            <div className="p-2.5 bg-green-50 text-green-700 rounded-lg text-xs font-medium">
+            <div className="p-3 bg-green-50 text-green-700 rounded-lg text-xs font-medium">
               ✓ {t('attendance.saved_notice') || 'Attendance saved successfully.'}
             </div>
           )}
@@ -270,9 +267,9 @@ export function SessionDetailScreen() {
             </div>
           )}
 
-          {localRoster && (
+          {activeRoster.length > 0 && (
             <AttendanceRoster
-              roster={localRoster}
+              roster={activeRoster}
               onChange={handleRosterChange}
               disabled={isCancelled}
             />
@@ -281,7 +278,7 @@ export function SessionDetailScreen() {
 
         {/* Notes Section (NOT-001, NOT-003) */}
         {isModuleEnabled('notes') && (
-          <section className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm space-y-4">
+          <section className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm space-y-4">
             <h2 className="text-base font-bold text-gray-900 flex items-center gap-2">
               <span>📝</span> {t('notes.title')}
             </h2>

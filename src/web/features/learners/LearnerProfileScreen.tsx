@@ -25,33 +25,35 @@ export function LearnerProfileScreen() {
     enabled: !!id && isModuleEnabled('notes')
   });
 
-  if (isLoading) return <div className="p-4 text-gray-500">{t('common.loading')}</div>;
-  if (!learner) return <div className="p-4 text-red-500">{t('common.error')}</div>;
+  if (isLoading) return <div className="p-8 text-center text-gray-500">{t('common.loading')}</div>;
+  if (!learner) return <div className="p-8 text-center text-red-500">{t('common.error')}</div>;
 
   return (
-    <div className="flex flex-col h-full bg-gray-50 pb-20">
-      <div className="bg-white p-4 border-b border-gray-200 flex items-center gap-2">
-        <button
-          onClick={() => navigate(-1)}
-          className="text-gray-500 hover:text-gray-700 min-h-[44px] min-w-[44px] flex items-center justify-center -ml-2"
-          aria-label="Back"
-        >
-          ←
-        </button>
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">{learner.display_name}</h1>
+    <div className="flex flex-col h-full bg-gray-50 pb-20 md:pb-8">
+      <div className="bg-white p-4 md:p-6 border-b border-gray-200">
+        <div className="max-w-4xl mx-auto w-full flex items-center gap-3">
+          <button
+            onClick={() => navigate(-1)}
+            className="text-gray-500 hover:text-gray-700 min-h-[44px] min-w-[44px] flex items-center justify-center -ml-2 rounded-lg"
+            aria-label="Back"
+          >
+            ←
+          </button>
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">{learner.display_name}</h1>
+          </div>
         </div>
       </div>
 
-      <div className="p-4 flex-1 space-y-6">
+      <div className="p-4 md:p-6 flex-1 max-w-4xl mx-auto w-full space-y-6">
         {isModuleEnabled('notes') && (
-          <section className="space-y-3">
-            <h2 className="text-base font-bold text-gray-900 flex items-center gap-2">
+          <section className="space-y-4">
+            <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
               <span>📝</span> {t('notes.title')}
             </h2>
 
             {isNotesLoading ? (
-              <div className="text-xs text-gray-400 py-4 text-center">{t('common.loading')}</div>
+              <div className="text-xs text-gray-400 py-6 text-center">{t('common.loading')}</div>
             ) : (
               <NotesList
                 notes={notes || []}
